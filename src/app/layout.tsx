@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
-import { inter } from "@/config/fonts";
+
 import "./globals.css";
+
+import { avenir_medium, inter, nickainley, sequel } from "@/config/fonts";
 import { Provider } from "@/components";
+
 
 export const metadata: Metadata = {
   title: {
-    template: "%s - Nutribox",
-    default: "Home - Nutribox",
+    template: "%s - Tradiciones de Chillán",
+    default: "Home - Tradiciones de Chillán",
   },
-  description: "Tienda Virtual",
+  description: "Cecinas Tradiciones de Chillán",
 };
 
 export default async function RootLayout({
@@ -18,7 +21,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={inter.className}>
+      <body className={`${inter.className} ${avenir_medium.variable} ${nickainley.variable} ${sequel.variable}`}>
         <Provider>{children}</Provider>
       </body>
     </html>

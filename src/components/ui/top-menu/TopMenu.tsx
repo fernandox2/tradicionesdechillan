@@ -1,10 +1,51 @@
 "use client";
 
-import { titleFont } from "@/config/fonts";
+import {
+  sequel,
+} from "@/config/fonts";
 import { useCartStore, useUIStore } from "@/store";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
+
+interface MenuItem {
+  id: number;
+  name: string;
+  url: string;
+}
+
+const menuItems: MenuItem[] = [
+  {
+    id: 1,
+    name: "Home",
+    url: "/",
+  },
+  {
+    id: 2,
+    name: "Nosotros",
+    url: "/about",
+  },
+  {
+    id: 3,
+    name: "Productos",
+    url: "/products",
+  },
+  {
+    id: 4,
+    name: "Distribuidores",
+    url: "/distributors",
+  },
+  {
+    id: 5,
+    name: "Blog",
+    url: "/blog",
+  },
+  {
+    id: 6,
+    name: "Contacto",
+    url: "/contact",
+  },
+];
 
 export const TopMenu = () => {
   const openSideMenu = useUIStore((state) => state.openSideMenu);
@@ -16,43 +57,40 @@ export const TopMenu = () => {
     setLoaded(true);
   }, []);
 
+  const TopMenu = (items: MenuItem[]) => {
+    return (
+      <>
+        {items.map((item) => (
+          <Link
+            key={item.id}
+            href={item.url}
+            className="group m-2 p-2 rounded-md transition-all"
+          >
+            <span className="relative text-2xl">
+              {item.name}
+              <span className="absolute left-0 -bottom-2 w-0 h-1 bg-white transition-all duration-300 group-hover:w-full"></span>
+            </span>
+          </Link>
+        ))}
+      </>
+    );
+  };
+
   return (
-    <nav className="flex px-5 justify-between items-center w-full">
-      {/* Logo */}
-      <div className="md:ml-5">
-        <Link href="/">
-          <span className={`${titleFont.className} antialiased font-bold`}>
-            Capibara
-          </span>
-          <span> | Store</span>
-        </Link>
-      </div>
+    <nav className="flex flex-col-reverse px-5 justify-center items-center w-full bg-[url('/imgs/background_top_menu.webp')] bg-cover bg-center h-[100px] md:h-[257px] bg-no-repeat">
       {/* Center Menu */}
-      <div className="hidden sm:block">
-        <Link
-          className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
-          href={"/gender/men"}
-        >
-          Hombres
-        </Link>
-        <Link
-          className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
-          href={"/gender/women"}
-        >
-          Mujeres
-        </Link>
-        <Link
-          className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
-          href={"/gender/kid"}
-        >
-          Niños
-        </Link>
+      <div className={`${sequel.className} hidden md:block text-white py-10`}>
+        <div className="flex justify-center items-center">
+          {TopMenu(menuItems)}
+          <img src="/imgs/siguenos.webp" alt="Logo" className="w-1/2 mx-auto" />
+        </div>
+        
       </div>
 
       {/* Search, Cart & Menu */}
-      <div className="flex items-center">
+      <div className="flex w-full justify-end items-center">
         <Link href="/search" className="mx-2">
-          <IoSearchOutline className="w-5 h-5" />
+          <IoSearchOutline className="w-8 h-8 text-white" />
         </Link>
         {loaded && (
           <Link
@@ -65,16 +103,16 @@ export const TopMenu = () => {
                   {totalItemsInCart}
                 </span>
               )}
-              <IoCartOutline className="w-5 h-5" />
+              <IoCartOutline className="w-8 h-8 text-white" />
             </div>
           </Link>
         )}
 
         <button
-          className="m-2 p-2 rounded-md transition-all hover:bg-gray-200"
+          className={`${sequel.className} m-2 p-2 rounded-md transition-all hover:bg-gray-200 md:hidden text-white`}
           onClick={openSideMenu}
         >
-          Menú
+          Menu
         </button>
       </div>
     </nav>
