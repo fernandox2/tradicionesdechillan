@@ -2,8 +2,34 @@ import { redirect } from "next/navigation";
 
 import { getPaginatedProducts } from "@/actions";
 import { OurMark, ProductPremium, TopMenu, HomeSlider, ProductFormat, MapSection, Footer, Contact, Blog } from "@/components";
-import { Branch } from "@/interfaces";
 import { getFakeLocales } from "@/data/fake-data";
+
+export const metadata = {
+  title: "Fábrica de Longanizas Premium | Sabores Tradicionales",
+  description: "Descubre nuestras longanizas artesanales premium, elaboradas con recetas tradicionales que garantizan calidad y autenticidad en cada bocado.",
+  openGraph: {
+    title: "Fábrica de Longanizas Premium | Sabores Tradicionales",
+    description: "Disfruta de longanizas artesanales de alta calidad, preparadas con técnicas tradicionales para ofrecerte un sabor inigualable.",
+    url: "https://www.tufabricadelonganizas.cl",
+    siteName: "Fábrica de Longanizas Premium",
+    images: [
+      {
+        url: "/imgs/longa-900.webp",
+        width: 800,
+        height: 600,
+        alt: "Fábrica de Longanizas Premium - Sabores Tradicionales",
+      },
+    ],
+    locale: "es_CL",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fábrica de Longanizas Premium | Sabores Tradicionales",
+    description: "Saborea nuestras longanizas artesanales premium, una fusión de tradición y calidad en cada porción.",
+    images: ["/imgs/longa-900.webp"],
+  },
+};
 
 interface Props {
   searchParams: {
