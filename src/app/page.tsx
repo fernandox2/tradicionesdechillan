@@ -1,8 +1,9 @@
 import { redirect } from "next/navigation";
 
 import { getPaginatedProducts } from "@/actions";
-import { OurMark, Pagination, ProductGrid, Title, TopMenu } from "@/components";
-import { HomeSlider } from "@/components";
+import { OurMark, ProductPremium, TopMenu, HomeSlider, ProductFormat, MapSection, Footer, Contact, Blog } from "@/components";
+import { Branch } from "@/interfaces";
+import { getFakeLocales } from "@/data/fake-data";
 
 interface Props {
   searchParams: {
@@ -10,21 +11,38 @@ interface Props {
   };
 }
 
-export default async function Home({ searchParams }: Props) {
+
+export default async function HomePage({ searchParams }: Props) {
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
 
-  const { products, currentPage, totalPages } = await getPaginatedProducts({ page });
+  const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN || "";
+
+  const { products } = await getPaginatedProducts({ page });
 
   if (products.length === 0) redirect("/");
 
+  const locales = await getFakeLocales()
+
   return (
-    <>
-        <TopMenu />
+    <div className="max-w-[1440px] mx-auto flex flex-col items-center bg-white">
+      <TopMenu />
 
-        <HomeSlider />
+      <HomeSlider />
 
-        <OurMark />
+      <OurMark />
 
-    </>
+      <ProductPremium />
+
+      <ProductFormat />
+
+      <MapSection mapboxToken={mapboxToken} branches={locales} />
+
+      <Contact />
+
+      <Blog />
+
+      <Footer />
+      
+    </div>
   );
 }

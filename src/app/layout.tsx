@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 
-import { avenir_medium, inter, nickainley, sequel } from "@/config/fonts";
+import { avenir_light, avenir_medium, inter, nickainley, sequel } from "@/config/fonts";
 import { Provider } from "@/components";
 
 
@@ -21,7 +21,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${inter.className} ${avenir_medium.variable} ${nickainley.variable} ${sequel.variable}`}>
+      <body className={`${inter.className} ${avenir_medium.variable} ${nickainley.variable} ${sequel.variable} ${avenir_light.variable}`}>
         <Provider>{children}</Provider>
       </body>
     </html>

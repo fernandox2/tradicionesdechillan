@@ -18,6 +18,11 @@ export const avenir_black = localFont({
   variable: '--font-avenir-black',
 });
 
+export const avenir_light = localFont({
+  src: '../app/fonts/avenir/Avenir-Light-07.ttf',
+  variable: '--font-avenir-light',
+});
+
 export const avenir_book = localFont({
   src: '../app/fonts/avenir/Avenir-Book-01.ttf',
   variable: '--font-avenir-book',

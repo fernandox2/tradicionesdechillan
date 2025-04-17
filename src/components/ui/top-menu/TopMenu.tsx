@@ -1,12 +1,14 @@
 "use client";
 
-import {
-  sequel,
-} from "@/config/fonts";
-import { useCartStore, useUIStore } from "@/store";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
+
+import Link from "next/link";
+
 import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
+
+import { sequel } from "@/config/fonts";
+import { useCartStore, useUIStore } from "@/store";
+import Image from "next/image";
 
 interface MenuItem {
   id: number;
@@ -23,27 +25,27 @@ const menuItems: MenuItem[] = [
   {
     id: 2,
     name: "Nosotros",
-    url: "/about",
+    url: "/",
   },
   {
     id: 3,
     name: "Productos",
-    url: "/products",
+    url: "/",
   },
   {
     id: 4,
     name: "Distribuidores",
-    url: "/distributors",
+    url: "/",
   },
   {
     id: 5,
     name: "Blog",
-    url: "/blog",
+    url: "/",
   },
   {
     id: 6,
     name: "Contacto",
-    url: "/contact",
+    url: "/",
   },
 ];
 
@@ -82,14 +84,25 @@ export const TopMenu = () => {
       <div className={`${sequel.className} hidden md:block text-white py-10`}>
         <div className="flex justify-center items-center">
           {TopMenu(menuItems)}
-          <img src="/imgs/siguenos.webp" alt="Logo" className="w-1/2 mx-auto" />
+          <Image
+            width={162}
+            height={50}
+            src="/imgs/siguenos.webp"
+            alt="Logo"
+            className="mx-auto ml-5 cursor-pointer"
+            onClick={() =>
+              window.open(
+                "https://www.instagram.com/tradicionesdechillan",
+                "_blank"
+              )
+            }
+          />
         </div>
-        
       </div>
 
       {/* Search, Cart & Menu */}
       <div className="flex w-full justify-end items-center">
-        <Link href="/search" className="mx-2">
+        <Link href="/" className="mx-2">
           <IoSearchOutline className="w-8 h-8 text-white" />
         </Link>
         {loaded && (
@@ -109,7 +122,7 @@ export const TopMenu = () => {
         )}
 
         <button
-          className={`${sequel.className} m-2 p-2 rounded-md transition-all hover:bg-gray-200 md:hidden text-white`}
+          className={`${sequel.className} m-2 p-2 rounded-md transition-all md:hidden text-white`}
           onClick={openSideMenu}
         >
           Menu

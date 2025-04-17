@@ -4,29 +4,34 @@ import Image from "next/image";
 
 import { avenir_book, nickainley, sequel } from "@/config/fonts";
 
-export const OurMark = () => {
+export const ProductPremium = () => {
   return (
-    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 bg-black xl:h-[956px] lg:h-auto">
+    <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-4 h-auto xl:h-[956px] lg:h-auto bg-orange-650">
       {/* Primera columna */}
-      <div className="flex flex-col items-center py-10">
-        <div className="flex items-center lg:mr-40 mr-20">
+      <div className="flex flex-col-reverse px-5 justify-center items-center w-full bg-[url('/imgs/img-premium-section.webp')] bg-cover bg-center md:h-full h-[700px]"></div>
+
+      {/* Segunda columna */}
+      <div className={`flex flex-col items-center`}>
+        <div className="flex items-center lg:mr-20 mr-10 md:mt-[100px] mt-10">
           {/* Logo */}
           <Image
-            src="/imgs/icono-tradiciones.webp"
+            src="/imgs/icon-2.webp"
             alt="Logo"
-            className="px-5 mb-5"
+            className="px-5 mb-24"
             width={130}
             height={130}
           />
           {/* Titulo */}
           <div className="relative py-20">
             <span
-              className={`${sequel.className} lg:text-5xl text-4xl text-white absolute top-12 lg:pl-[7.5rem] pl-20`}
+              className={`${sequel.className} lg:text-5xl text-4xl text-white absolute top-0 mt-8`}
             >
-              Nuestra
+              Longanizas
             </span>
-            <span className={`${nickainley.className} text-white lg:text-8xl text-7xl`}>
-              Marca{" "}
+            <span
+              className={`${nickainley.className} text-white text-6xl lg:ml-[142px] ml-10`}
+            >
+              Premium
             </span>
           </div>
         </div>
@@ -64,8 +69,6 @@ export const OurMark = () => {
           </span>
         </div>
       </div>
-      {/* Segunda columna */}
-      <div className="flex flex-col-reverse px-5 justify-center items-center w-full bg-[url('/imgs/img-nuestra-marca.webp')] bg-cover bg-center lg:h-full h-[700px]"></div>
     </div>
   );
 };
