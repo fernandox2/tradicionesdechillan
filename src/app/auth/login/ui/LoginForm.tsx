@@ -10,6 +10,7 @@ import clsx from "clsx";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useUIStore } from "@/store";
+import { avenir_black, avenir_book } from "@/config/fonts";
 
 export const LoginForm = () => {
   const [state, dispatch] = useFormState(authenticate, undefined);
@@ -27,7 +28,7 @@ export const LoginForm = () => {
   return (
     <>
       <form action={dispatch} className="space-y-3">
-        <div className="flex flex-col">
+        <div className={`${avenir_book.className} flex flex-col text-xl`}>
           <label htmlFor="email">Correo electrónico</label>
           <input
             className="px-5 py-2 border bg-gray-200 rounded mb-5"
@@ -74,7 +75,7 @@ function LoginButton() {
     <button
       type="submit"
       disabled={pending}
-      className={clsx({
+      className={clsx(`${avenir_book.className}`, {
         "btn-primary": !pending,
         "btn-disabled": pending,
       })}

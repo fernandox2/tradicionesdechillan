@@ -32,7 +32,7 @@ export const HomeSlider = () => {
           width={59}
           height={120}
           src="/imgs/bandera1.webp"
-          className="absolute z-10 top-0 lg:left-72 left-40"
+          className="absolute z-10 top-0 lg:left-72 left-40 md:block hidden"
           alt="Bandera Tradiciones"
         />
       )}

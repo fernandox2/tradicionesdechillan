@@ -12,15 +12,20 @@ import { useUIStore } from "@/store";
 import { logout } from "@/actions";
 
 import {
+  IoCartOutline,
   IoCloseOutline,
   IoLogInOutline,
   IoLogOutOutline,
+  IoMailOutline,
+  IoNewspaperOutline,
   IoPeopleOutline,
   IoPersonOutline,
   IoSearchOutline,
   IoShirtOutline,
+  IoStorefrontOutline,
   IoTicketOutline,
 } from "react-icons/io5";
+import { avenir_book } from "@/config/fonts";
 
 interface Props {
   session: Session | null;
@@ -51,7 +56,7 @@ export const Sidebar = ({ session }: Props) => {
       {/* SideMenu */}
       <nav
         className={clsx(
-          "fixed p-5 right-0 top-0 w-[500px] h-screen bg-white z-20 shadow-2xl transform transition.all duration-300",
+          `${avenir_book.className} fixed p-5 right-0 top-0 w-[400px] h-screen bg-white z-20 shadow-2xl transform transition.all duration-300`,
           {
             "translate-x-full": !isSideMenuOpen,
           }
@@ -71,7 +76,7 @@ export const Sidebar = ({ session }: Props) => {
           <input
             type="text"
             placeholder="Escribe para buscar..."
-            className="w-full bg-gray-50 rounded pl-10 py-2 pr-10 border-b-2 text-xl border-gray-200 focus:outline-none focus:border-blue-500"
+            className="w-full bg-gray-50 rounded pl-10 py-2 pr-10 border-b-2 text-xl border-gray-200 focus:outline-none focus:border-orange-650"
           />
         </div>
 
@@ -105,6 +110,56 @@ export const Sidebar = ({ session }: Props) => {
           >
             <IoLogInOutline size={30} />
             <span className="ml-3 text-xl">Ingresar</span>
+          </Link>
+        )}
+
+        {!session && (
+          <Link
+            href="/"
+            className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all lg:hidden"
+          >
+            <IoPeopleOutline size={30} />
+            <span className="ml-3 text-xl">Nosotros</span>
+          </Link>
+        )}
+
+        {!session && (
+          <Link
+            href="/"
+            className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all lg:hidden"
+          >
+            <IoCartOutline size={30} />
+            <span className="ml-3 text-xl">Productos</span>
+          </Link>
+        )}
+
+        {!session && (
+          <Link
+            href="/"
+            className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all lg:hidden"
+          >
+            <IoStorefrontOutline size={30} />
+            <span className="ml-3 text-xl">Distribuidores</span>
+          </Link>
+        )}
+
+        {!session && (
+          <Link
+            href="/"
+            className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all lg:hidden"
+          >
+            <IoNewspaperOutline size={30} />
+            <span className="ml-3 text-xl">Blog</span>
+          </Link>
+        )}
+
+        {!session && (
+          <Link
+            href="/"
+            className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all lg:hidden"
+          >
+            <IoMailOutline size={30} />
+            <span className="ml-3 text-xl">Contacto</span>
           </Link>
         )}
 

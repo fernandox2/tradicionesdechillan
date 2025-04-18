@@ -122,7 +122,7 @@ export const TopMenu = () => {
         )}
 
         <button
-          className={`${sequel.className} m-2 p-2 rounded-md transition-all md:hidden text-white`}
+          className={`${sequel.className} m-2 p-2 rounded-md transition-all text-white`}
           onClick={openSideMenu}
         >
           Menu
