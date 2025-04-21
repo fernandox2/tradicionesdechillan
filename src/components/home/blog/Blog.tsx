@@ -82,7 +82,10 @@ export const Blog = () => {
 
       <div className="flex md:flex-row flex-col w-full lg:pl-80 lg:pr-20 lg:items-end items-center gap-4 lg:mb-10 md:mt-0 mt-96">
         {articulos.map((articulo, i) => (
-          <div key={`${articulo.title} - ${i}`} className="flex flex-col h-[700px] w-[400px] xl:gap-4 lg:gap-1 p-4">
+          <div
+            key={`${articulo.title} - ${i}`}
+            className="flex flex-col h-[700px] w-[400px] xl:gap-4 lg:gap-1 p-4"
+          >
             <Image
               height={162}
               width={400}
@@ -100,16 +103,24 @@ export const Blog = () => {
                   : "bg-orange-650"
               }`}
             >
-              <span className={`${avenir_black.className} text-[16px] text-white uppercase hidden xl:block`}>
+              <span
+                className={`${avenir_black.className} text-[16px] text-white uppercase hidden xl:block`}
+              >
                 {(() => {
                   const words = articulo.title.split(" ");
-                  return words.length > 14 ? words.slice(0, 14).join(" ") + "..." : articulo.title;
+                  return words.length > 14
+                    ? words.slice(0, 14).join(" ") + "..."
+                    : articulo.title;
                 })()}
               </span>
-              <span className={`${avenir_black.className} xl:text-[16px] lg:text-[12px] text-white uppercase lg:block xl:hidden`}>
+              <span
+                className={`${avenir_black.className} xl:text-[16px] lg:text-[12px] text-white uppercase lg:block xl:hidden`}
+              >
                 {(() => {
                   const words = articulo.title.split(" ");
-                  return words.length > 7 ? words.slice(0, 7).join(" ") + "..." : articulo.title;
+                  return words.length > 7
+                    ? words.slice(0, 7).join(" ") + "..."
+                    : articulo.title;
                 })()}
               </span>
             </div>
@@ -129,13 +140,13 @@ export const Blog = () => {
             >
               {(() => {
                 const words = articulo.description.split(" ");
-                return words.length > 22
-                  ? words.slice(0, 22).join(" ") + "..."
+                return words.length > 40
+                  ? words.slice(0, 40).join(" ") + "..."
                   : articulo.description;
               })()}
             </span>
             <span
-              className={`${avenir_book.className} text-xl text-white text-justify pt-8 lg:block xl:hidden`}
+              className={`${avenir_book.className} text-xl text-white text-justify pt-8 lg:block hidden xl:hidden`}
             >
               {(() => {
                 const words = articulo.description.split(" ");
@@ -147,7 +158,9 @@ export const Blog = () => {
 
             <button
               onClick={() => handleClick(articulo.url)}
-              className={`${avenir_book.className} w-24 min-h-10 text-white md:mt-0 my-5 ${
+              className={`${
+                avenir_book.className
+              } w-24 min-h-10 text-white md:mt-0 my-5 ${
                 i + 1 === 1
                   ? "bg-yellow-650"
                   : i + 1 === 2
