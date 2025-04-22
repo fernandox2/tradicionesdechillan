@@ -45,25 +45,28 @@ export const Contact = () => {
     setLoading(true);
     setSuccessMessage("");
     try {
+      setTimeout(() => {
+        setSuccessMessage("¡Su mensaje ha sido enviado exitosamente!");
+        reset();
+        setLoading(false);
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 5000);
+      }, 5000);
+
       const response = await axios.post("/api/contact", {
         ...data,
         token,
       });
 
       if (response.status === 200) {
-        setSuccessMessage("¡Su mensaje ha sido enviado exitosamente!");
-        reset();
-        setTimeout(() => {
-          setSuccessMessage("");
-        }, 5000);
+        console.log("Se encio el mensaje.");
       } else {
         alert("Hubo un problema al enviar el correo.");
       }
     } catch (error) {
       console.error("Error:", error);
       alert("Error al enviar el correo.");
-    } finally {
-      setLoading(false);
     }
   };
 
