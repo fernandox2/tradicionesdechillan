@@ -7,7 +7,9 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 
 import { Icon } from "@iconify/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
+
+import ReCAPTCHA from "react-google-recaptcha";
 
 type FormInputs = {
   name: string;
@@ -24,14 +26,29 @@ export const Contact = () => {
     reset,
   } = useForm<FormInputs>();
 
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "";
+
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    const token = await recaptchaRef.current?.executeAsync();
+    recaptchaRef.current?.reset();
+
+    if (!token) {
+      alert("Error al validar el reCAPTCHA.");
+      return;
+    }
+
     setLoading(true);
     setSuccessMessage("");
     try {
-      const response = await axios.post("/api/contact", data);
+      const response = await axios.post("/api/contact", {
+        ...data,
+        token,
+      });
 
       if (response.status === 200) {
         setSuccessMessage("¡Su mensaje ha sido enviado exitosamente!");
@@ -51,7 +68,7 @@ export const Contact = () => {
   };
 
   return (
-    <div className="flex lg:flex-col-reverse flex-col lg:grid lg:grid-cols-2 gap-4 h-auto md:h-[956px] bg-[#dfdfdf] md:pb-0 pb-10">
+    <div className="flex lg:flex-col-reverse flex-col lg:grid lg:grid-cols-2 gap-4 h-auto md:h-[1050px] bg-[#dfdfdf] md:pb-0 pb-10">
       <div className="relative flex flex-col-reverse px-5 justify-center items-center w-full bg-[url('/imgs/img-contacto.webp')] bg-cover bg-center md:h-full h-[700px]">
         <Image
           width={242}
@@ -169,6 +186,13 @@ export const Contact = () => {
             {successMessage && (
               <span className="text-green-700 text-md">{successMessage}</span>
             )}
+
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey={siteKey}
+              size="invisible"
+              badge="bottomright"
+            />
 
             <button
               type="submit"

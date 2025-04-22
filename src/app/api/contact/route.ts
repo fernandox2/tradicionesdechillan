@@ -1,8 +1,27 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import axios from "axios";
+import { NextApiResponse } from "next";
 
-export async function POST(request: Request) {
-  const { name, email, message, foundBy } = await request.json();
+export async function POST(request: Request, res: NextApiResponse) {
+  const { name, email, message, foundBy, token } = await request.json();
+
+  const verifyRes = await axios.post(
+    "https://www.google.com/recaptcha/api/siteverify",
+    null,
+    {
+      params: {
+        secret: process.env.RECAPTCHA_SECRET_KEY,
+        response: token,
+      },
+    }
+  );
+
+  const { success } = verifyRes.data;
+
+  if (!success) {
+    return res.status(400).json({ error: "Falló la validación de reCAPTCHA" });
+  }
 
   const transporter = nodemailer.createTransport({
     host: "mail.tradicionesdechillan.cl",
