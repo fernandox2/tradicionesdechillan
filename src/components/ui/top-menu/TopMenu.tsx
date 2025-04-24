@@ -25,27 +25,27 @@ const menuItems: MenuItem[] = [
   {
     id: 2,
     name: "Nosotros",
-    url: "/",
+    url: "/#nosotros",
   },
   {
     id: 3,
     name: "Productos",
-    url: "/",
+    url: "/#productos",
   },
   {
     id: 4,
     name: "Distribuidores",
-    url: "/",
+    url: "/#distribuidores",
   },
   {
     id: 5,
     name: "Blog",
-    url: "/",
+    url: "/#blog",
   },
   {
     id: 6,
     name: "Contacto",
-    url: "/",
+    url: "/#contacto",
   },
 ];
 

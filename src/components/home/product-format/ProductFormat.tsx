@@ -1,14 +1,19 @@
 "use client";
 
-
 import Image from "next/image";
 
 import { avenir_black, avenir_medium } from "@/config/fonts";
 
-export const ProductFormat = () => {
+interface Props {
+  id: string;
+}
+
+export const ProductFormat = ({ id }: Props) => {
   return (
-    <div className="relative w-full p-4 bg-[url('/imgs/bg-product-section.webp')] bg-cover bg-center md:h-[928px] h-auto md:px-20 px-10">
-      
+    <section
+      id={id}
+      className="relative w-full p-4 bg-[url('/imgs/bg-product-section.webp')] bg-cover bg-center md:h-[928px] h-auto md:px-20 px-10"
+    >
       <Image
         src="/imgs/bandera1.webp"
         alt="Bandera Tradiciones"
@@ -71,6 +76,6 @@ export const ProductFormat = () => {
           className="absolute bottom-10 md:px-0 px-10"
         />
       </div>
-    </div>
+    </section>
   );
 };

@@ -18,7 +18,11 @@ type FormInputs = {
   foundBy: string;
 };
 
-export const Contact = () => {
+interface Props {
+  id: string;
+}
+
+export const Contact = ({ id }: Props) => {
   const {
     register,
     handleSubmit,
@@ -71,7 +75,10 @@ export const Contact = () => {
   };
 
   return (
-    <div className="flex lg:flex-col-reverse flex-col lg:grid lg:grid-cols-2 gap-4 h-auto md:h-[1050px] bg-[#dfdfdf] md:pb-0 pb-10">
+    <section
+      id={id}
+      className="flex lg:flex-col-reverse flex-col lg:grid lg:grid-cols-2 gap-4 h-auto md:h-[1050px] bg-[#dfdfdf] md:pb-0 pb-10"
+    >
       <div className="relative flex flex-col-reverse px-5 justify-center items-center w-full bg-[url('/imgs/img-contacto.webp')] bg-cover bg-center md:h-full h-[700px]">
         <Image
           width={242}
@@ -218,6 +225,6 @@ export const Contact = () => {
           </form>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
