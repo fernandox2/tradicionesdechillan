@@ -115,8 +115,9 @@ export const Sidebar = ({ session }: Props) => {
 
         {!session && (
           <Link
-            href="/"
+            href="/#nosotros"
             className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all lg:hidden"
+            onClick={closeMenu}
           >
             <IoPeopleOutline size={30} />
             <span className="ml-3 text-xl">Nosotros</span>
@@ -125,8 +126,9 @@ export const Sidebar = ({ session }: Props) => {
 
         {!session && (
           <Link
-            href="/"
+            href="/#productos"
             className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all lg:hidden"
+            onClick={closeMenu}
           >
             <IoCartOutline size={30} />
             <span className="ml-3 text-xl">Productos</span>
@@ -135,8 +137,9 @@ export const Sidebar = ({ session }: Props) => {
 
         {!session && (
           <Link
-            href="/"
+            href="/#distribuidores"
             className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all lg:hidden"
+            onClick={closeMenu}
           >
             <IoStorefrontOutline size={30} />
             <span className="ml-3 text-xl">Distribuidores</span>
@@ -145,8 +148,9 @@ export const Sidebar = ({ session }: Props) => {
 
         {!session && (
           <Link
-            href="/"
+            href="/#blog"
             className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all lg:hidden"
+            onClick={closeMenu}
           >
             <IoNewspaperOutline size={30} />
             <span className="ml-3 text-xl">Blog</span>
@@ -155,8 +159,9 @@ export const Sidebar = ({ session }: Props) => {
 
         {!session && (
           <Link
-            href="/"
+            href="/#contacto"
             className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all lg:hidden"
+            onClick={closeMenu}
           >
             <IoMailOutline size={30} />
             <span className="ml-3 text-xl">Contacto</span>

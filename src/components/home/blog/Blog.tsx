@@ -64,14 +64,21 @@ calidad y vínculo con la región.`,
   },
 ];
 
-export const Blog = () => {
+interface Props {
+  id: string;
+}
+
+export const Blog = ({ id }: Props) => {
   const router = useRouter();
 
   const handleClick = (url: string) => {
     router.replace(url);
   };
   return (
-    <div className="relative w-full flex flex-col gap-4 md:h-[956px] h-auto bg-black justify-center items-center">
+    <section
+      id={id}
+      className="relative w-full flex flex-col gap-4 md:h-[956px] h-auto bg-black justify-center items-center"
+    >
       <Image
         width={242}
         height={349}
@@ -173,6 +180,6 @@ export const Blog = () => {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };

@@ -9,11 +9,15 @@ import { Branch } from "@/interfaces";
 interface Props {
   branches?: Branch[];
   mapboxToken?: string;
+  id: string;
 }
 
-export const MapSection = ({ branches, mapboxToken }: Props) => {
+export const MapSection = ({ branches, mapboxToken, id }: Props) => {
   return (
-    <div className="relative w-full xl:h-[928px] lg:h-auto flex flex-col items-center">
+    <section
+      id={id}
+      className="relative w-full xl:h-[928px] lg:h-auto flex flex-col items-center"
+    >
       <Image
         width={242}
         height={349}
@@ -23,7 +27,9 @@ export const MapSection = ({ branches, mapboxToken }: Props) => {
       />
 
       <div className="w-full flex flex-col justify-center items-center md:mt-24 mt-96 px-10">
-        <span className={`${sequel.className} text-[35px] xl:ml-0 lg:ml-60 md:ml-40`}>
+        <span
+          className={`${sequel.className} text-[35px] xl:ml-0 lg:ml-60 md:ml-40`}
+        >
           Una Tradicion que se encuentra
         </span>
         <span
@@ -42,7 +48,7 @@ export const MapSection = ({ branches, mapboxToken }: Props) => {
                 className="flex flex-col items-start gap-2 mt-10"
               >
                 <span
-                  className={`${avenir_medium.className} text-4xl flex gap-2 text-wrap`}
+                  className={`${avenir_medium.className} text-2xl flex gap-2 text-wrap`}
                 >
                   <Image
                     width={28}
@@ -54,7 +60,7 @@ export const MapSection = ({ branches, mapboxToken }: Props) => {
                   {local.name}
                 </span>
                 <span
-                  className={`${avenir_light.className} text-2xl flex gap-2`}
+                  className={`${avenir_light.className} text-xl flex gap-2`}
                 >
                   <Image
                     width={28}
@@ -66,7 +72,7 @@ export const MapSection = ({ branches, mapboxToken }: Props) => {
                   {local.address}
                 </span>
                 <span
-                  className={`${avenir_light.className} text-2xl flex gap-2`}
+                  className={`${avenir_light.className} text-xl flex gap-2`}
                 >
                   <Image
                     width={28}
@@ -83,10 +89,10 @@ export const MapSection = ({ branches, mapboxToken }: Props) => {
       </div>
 
       <div className="w-full flex justify-center items-center mt-10">
-          {mapboxToken && branches && (
-            <MapboxLocales mapboxToken={mapboxToken} locales={branches} />
-          )}
-        </div>
-    </div>
+        {mapboxToken && branches && (
+          <MapboxLocales mapboxToken={mapboxToken} locales={branches} />
+        )}
+      </div>
+    </section>
   );
 };

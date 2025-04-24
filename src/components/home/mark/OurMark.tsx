@@ -4,9 +4,16 @@ import Image from "next/image";
 
 import { avenir_book, nickainley, sequel } from "@/config/fonts";
 
-export const OurMark = () => {
+interface Props {
+  id: string;
+}
+
+export const OurMark = ({ id }: Props) => {
   return (
-    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 bg-black xl:h-[956px] lg:h-auto">
+    <section
+      id={id}
+      className="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 bg-black xl:h-[956px] lg:h-auto"
+    >
       {/* Primera columna */}
       <div className="flex flex-col items-center py-10">
         <div className="flex items-center lg:mr-40 mr-20">
@@ -25,7 +32,9 @@ export const OurMark = () => {
             >
               Nuestra
             </span>
-            <span className={`${nickainley.className} text-white lg:text-8xl text-7xl`}>
+            <span
+              className={`${nickainley.className} text-white lg:text-8xl text-7xl`}
+            >
               Marca{" "}
             </span>
           </div>
@@ -66,6 +75,6 @@ export const OurMark = () => {
       </div>
       {/* Segunda columna */}
       <div className="flex flex-col-reverse px-5 justify-center items-center w-full bg-[url('/imgs/img-nuestra-marca.webp')] bg-cover bg-center lg:h-full h-[700px]"></div>
-    </div>
+    </section>
   );
 };
