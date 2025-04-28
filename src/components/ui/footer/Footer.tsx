@@ -2,6 +2,7 @@
 
 import { avenir_book } from "@/config/fonts";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 export const Footer = () => {
@@ -14,13 +15,13 @@ export const Footer = () => {
           Siguenos:{" "}
         </span>
         <div className="flex gap-6">
-          <Image
+          {/* <Image
             width={40}
             height={40}
             src="/imgs/icon-yt-white.webp"
             alt="Youtube"
             className="w-10 h-10"
-          />
+          /> */}
           <Image
             width={40}
             height={40}
@@ -34,13 +35,13 @@ export const Footer = () => {
               )
             }
           />
-          <Image
+          {/* <Image
             width={40}
             height={40}
             src="/imgs/icon-tiktok.webp"
             alt="TikTok"
             className="w-10 h-10"
-          />
+          /> */}
         </div>
       </div>
 
@@ -62,11 +63,17 @@ export const Footer = () => {
             alt="Whatsapp"
             className="w-10 h-10"
           />
-          <span
-            className={`${avenir_book.className} lg:text-[30px] md:text-[36px] text-[30px] text-white mr-20`}
+          <Link
+            href="https://wa.me/56987654321"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            +56 987 654 321
-          </span>
+            <span
+              className={`${avenir_book.className} lg:text-[30px] md:text-[36px] text-[30px] text-white mr-20`}
+            >
+              +56 987 654 321
+            </span>
+          </Link>
         </div>
       </div>
 

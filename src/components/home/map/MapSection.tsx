@@ -5,6 +5,7 @@ import Image from "next/image";
 import { avenir_light, avenir_medium, sequel } from "@/config/fonts";
 import MapboxLocales from "./MapboxLocales";
 import { Branch } from "@/interfaces";
+import Link from "next/link";
 
 interface Props {
   branches?: Branch[];
@@ -71,7 +72,10 @@ export const MapSection = ({ branches, mapboxToken, id }: Props) => {
                   />
                   {local.address}
                 </span>
-                <span
+                <Link
+                  href={`https://wa.me/${local?.phone?.replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`${avenir_light.className} text-xl flex gap-2`}
                 >
                   <Image
@@ -82,7 +86,7 @@ export const MapSection = ({ branches, mapboxToken, id }: Props) => {
                     alt={local.name}
                   />
                   {local.phone}
-                </span>
+                </Link>
               </div>
             ))}
         </div>
