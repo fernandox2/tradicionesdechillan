@@ -102,10 +102,10 @@ export const TopMenu = () => {
 
       {/* Search, Cart & Menu */}
       <div className="flex w-full justify-end items-center">
-        <Link href="/" className="mx-2">
+        {/* <Link href="/" className="mx-2">
           <IoSearchOutline className="w-8 h-8 text-white" />
-        </Link>
-        {loaded && (
+        </Link> */}
+        {/* {loaded && (
           <Link
             href={totalItemsInCart > 0 ? "/cart" : "/empty"}
             className="mx-2"
@@ -119,7 +119,7 @@ export const TopMenu = () => {
               <IoCartOutline className="w-8 h-8 text-white" />
             </div>
           </Link>
-        )}
+        )} */}
 
         <button
           className={`${sequel.className} m-2 p-2 rounded-md transition-all text-white`}

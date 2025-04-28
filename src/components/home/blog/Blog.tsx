@@ -163,7 +163,7 @@ export const Blog = ({ id }: Props) => {
               })()}
             </span>
 
-            <button
+            {/* <button
               onClick={() => handleClick(articulo.url)}
               className={`${
                 avenir_book.className
@@ -176,7 +176,7 @@ export const Blog = ({ id }: Props) => {
               }`}
             >
               Leer Más
-            </button>
+            </button> */}
           </div>
         ))}
       </div>
