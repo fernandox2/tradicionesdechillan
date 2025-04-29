@@ -11,23 +11,17 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 const images = [
+  "/imgs/home-slider/home-slider-3.jpeg",
   "/imgs/home-slider/home-slider-1.jpg",
   "/imgs/home-slider/home-slider-2.jpg",
-  //'/imgs/home-slider/home-slider-1.jpg',
 ];
 
 export const HomeSlider = () => {
   const [activeSlide, setActiveSlide] = React.useState(0);
 
-  // Función para determinar la imagen de etiqueta según el índice del slide.
-  const getLabelImage = (index: number) =>
-    index === 1
-      ? "/imgs/home-slider/label-2.webp"
-      : "/imgs/home-slider/label.webp";
-
   return (
     <div className="relative w-full max-w-[1440px] max-h-[700px]">
-      {activeSlide === 1 && (
+      {activeSlide === 2 && (
         <Image
           width={59}
           height={120}
@@ -36,7 +30,7 @@ export const HomeSlider = () => {
           alt="Bandera Tradiciones"
         />
       )}
-      {activeSlide === 0 && (
+      {activeSlide === 1 && (
         <Image
           width={242}
           height={349}
@@ -45,7 +39,7 @@ export const HomeSlider = () => {
           alt="Bandera Tradiciones"
         />
       )}
-      {activeSlide === 1 && (
+      {activeSlide === 2 && (
         <Image
           width={514}
           height={270}
@@ -55,37 +49,37 @@ export const HomeSlider = () => {
         />
       )}
 
-    <Swiper
-      modules={[Pagination, Autoplay, A11y]}
-      spaceBetween={50}
-      slidesPerView={1}
-      pagination={{
-        clickable: true,
-        bulletClass: "swiper-pagination-bullet",
-        bulletActiveClass: "swiper-pagination-bullet-active",
-      }}
-      loop={true}
-      autoplay={{ delay: 5000 }}
-      onSlideChange={(swiper) => setActiveSlide(swiper.realIndex)}
-    >
-      {images.map((src, index) => (
-        <SwiperSlide key={index}>
-        <Image
-          src={src}
-          alt={`Slide ${index + 1}`}
-          width={1440}
-          height={700}
-          style={{
-            display: "block",
-            width: "100%",
-            height: "700px",
-            objectFit: "cover",
-            objectPosition: "bottom",
-          }}
-        />
-        </SwiperSlide>
-      ))}
-    </Swiper>
+      <Swiper
+        modules={[Pagination, Autoplay, A11y]}
+        spaceBetween={50}
+        slidesPerView={1}
+        pagination={{
+          clickable: true,
+          bulletClass: "swiper-pagination-bullet",
+          bulletActiveClass: "swiper-pagination-bullet-active",
+        }}
+        loop={true}
+        autoplay={{ delay: 5000 }}
+        onSlideChange={(swiper) => setActiveSlide(swiper.realIndex)}
+      >
+        {images.map((src, index) => (
+          <SwiperSlide key={index}>
+            <Image
+              src={src}
+              alt={`Slide ${index + 1}`}
+              width={1440}
+              height={700}
+              style={{
+                display: "block",
+                width: "100%",
+                height: "700px",
+                objectFit: "cover",
+                objectPosition: "bottom",
+              }}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
       <style jsx global>{`
         .swiper-pagination {
