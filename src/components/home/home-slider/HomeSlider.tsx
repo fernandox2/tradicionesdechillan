@@ -11,7 +11,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 const images = [
-  "/imgs/home-slider/home-slider-3.jpeg",
+  "/imgs/home-slider/home-slider-3.webp",
   "/imgs/home-slider/home-slider-1.jpg",
   "/imgs/home-slider/home-slider-2.jpg",
 ];
@@ -23,15 +23,17 @@ export const HomeSlider = () => {
     <div className="relative w-full max-w-[1440px] max-h-[700px]">
       {activeSlide === 2 && (
         <Image
+          priority
           width={59}
           height={120}
           src="/imgs/bandera1.webp"
-          className="absolute z-10 top-0 lg:left-72 left-40 md:block hidden"
+          className="absolute z-10 top-0 lg:left-72 left-40"
           alt="Bandera Tradiciones"
         />
       )}
       {activeSlide === 1 && (
         <Image
+          priority
           width={242}
           height={349}
           src="/imgs/home-slider/label.webp"
@@ -41,10 +43,22 @@ export const HomeSlider = () => {
       )}
       {activeSlide === 2 && (
         <Image
+          priority
           width={514}
           height={270}
           src="/imgs/home-slider/label-2.webp"
-          className="absolute z-10 top-60 lg:left-20 left-0"
+          className="absolute z-10 top-60 lg:left-20 lg:-translate-x-0 left-1/2 -translate-x-1/2 lg:w-[514px] lg:h-[270px] w-[308px] h-[162px]"
+          alt="Bandera Tradiciones"
+        />
+      )}
+
+      {activeSlide === 0 && (
+        <Image
+          priority
+          width={299}
+          height={401}
+          src="/imgs/home-slider/label-3.png"
+          className="absolute z-10 top-0 left-1/2 -translate-x-1/2"
           alt="Bandera Tradiciones"
         />
       )}
@@ -65,6 +79,7 @@ export const HomeSlider = () => {
         {images.map((src, index) => (
           <SwiperSlide key={index}>
             <Image
+              priority
               src={src}
               alt={`Slide ${index + 1}`}
               width={1440}
