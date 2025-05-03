@@ -6,6 +6,7 @@ import { avenir_light, avenir_medium, sequel } from "@/config/fonts";
 import MapboxLocales from "./MapboxLocales";
 import { Branch } from "@/interfaces";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 interface Props {
   branches?: Branch[];
@@ -14,6 +15,14 @@ interface Props {
 }
 
 export const MapSection = ({ branches, mapboxToken, id }: Props) => {
+  const DynamicMapboxLocales = dynamic(
+    () => import('./MapboxLocales').then(mod => mod.default), // <-- Usa .default porque MapboxLocales tiene export default
+    {
+      ssr: false,
+      loading: () => <div style={{ height: '416px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><p>Cargando mapa base...</p></div>
+    }
+  );
+
   return (
     <section
       id={id}
@@ -94,7 +103,7 @@ export const MapSection = ({ branches, mapboxToken, id }: Props) => {
 
       <div className="w-full flex justify-center items-center mt-10">
         {mapboxToken && branches && (
-          <MapboxLocales mapboxToken={mapboxToken} locales={branches} />
+          <DynamicMapboxLocales mapboxToken={mapboxToken} locales={branches} />
         )}
       </div>
     </section>

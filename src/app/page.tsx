@@ -7,7 +7,6 @@ import {
   TopMenu,
   HomeSlider,
   ProductFormat,
-  MapSection,
   Footer,
   Contact,
   Blog,
@@ -15,8 +14,10 @@ import {
 } from "@/components";
 import { getFakeLocales } from "@/data/fake-data";
 import { auth } from "@/auth.config";
+import dynamic from "next/dynamic";
 
 export const metadata = {
+  metadataBase: new URL('https://www.tradicionesdechillan.cl'),
   title: "Tradiciones de Chillán | Fábrica de Longanizas Premium",
   description:
     "Descubre nuestras longanizas artesanales premium, elaboradas con recetas tradicionales que garantizan calidad y autenticidad en cada bocado.",
@@ -28,7 +29,7 @@ export const metadata = {
     siteName: "Longanizas Tradiciones de Chillán",
     images: [
       {
-        url: "/imgs/img-nuestra-marca",
+        url: "/imgs/longa-900.webp",
         width: 800,
         height: 600,
         alt: "Fábrica de Longanizas Premium - Sabores Tradicionales",
@@ -42,7 +43,7 @@ export const metadata = {
     title: "Tradiciones de Chillán | Fábrica de Longanizas Premium",
     description:
       "Saborea nuestras longanizas artesanales premium, una fusión de tradición y calidad en cada porción.",
-    images: ["/imgs/img-nuestra-marca"],
+    images: ["/imgs/longa-900.webp"],
   },
 };
 
@@ -65,6 +66,14 @@ export default async function HomePage({ searchParams }: Props) {
 
   const locales = await getFakeLocales();
 
+  const DynamicMapComponent = dynamic(
+    () => import('@/components/home/map/MapSection').then(mod => mod.MapSection),
+    {
+      loading: () => <p>Cargando mapa...</p>, // Opcional: Muestra algo mientras carga
+      ssr: false 
+    }
+  );
+
   return (
     <div className="max-w-[1440px] mx-auto flex flex-col items-center bg-white">
       <TopMenu />
@@ -73,13 +82,13 @@ export default async function HomePage({ searchParams }: Props) {
       <OurMark id="nosotros" />
       <ProductPremium />
       <ProductFormat id="productos" />
-      <MapSection
+      <DynamicMapComponent
         mapboxToken={mapboxToken}
         branches={locales}
         id="distribuidores"
       />
       <Contact id="contacto" />
-      <Blog id="blog" />x
+      <Blog id="blog" />
       <Footer />
     </div>
   );

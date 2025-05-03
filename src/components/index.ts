@@ -18,6 +18,5 @@ export * from "./home/home-slider/HomeSlider";
 export * from "./home/mark/OurMark";
 export * from "./home/product-premium/ProductPremium";
 export * from "./home/product-format/ProductFormat";
-export * from "./home/map/MapSection";
 export * from "./home/contact/Contact";
 export * from "./home/blog/Blog";
