@@ -74,21 +74,20 @@ export const HomeSlider = () => {
       >
         {images.map((src, index) => (
           <SwiperSlide key={index}>
-            <Image
-              priority={index === 0}
-              src={src}
-              alt={`Slide ${index + 1}`}
-              width={1440}
-              height={700}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1440px"
-              style={{
-                display: "block",
-                width: "100%",
-                height: "700px",
-                objectFit: "cover",
-                objectPosition: "bottom",
-              }}
-            />
+            <div className="w-full h-[700px]">
+              {" "}
+              {/* Altura responsiva aquí */}
+              <Image
+                priority={index === 0}
+                src={src}
+                alt={`Slide ${index + 1}`}
+                width={1440} // Sigue siendo necesario para la proporción original
+                height={700} // Sigue siendo necesario para la proporción original
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1440px"
+                className="block w-full h-full object-cover object-bottom" // Imagen llena el div (h-full)
+                // Sin style height aquí
+              />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
