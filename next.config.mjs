@@ -1,10 +1,16 @@
-import nextBundleAnalyzer from '@next/bundle-analyzer';
+// next.config.mjs
+import withBundleAnalyzer from "@next/bundle-analyzer";
 
-// Configura el analizador
-const withBundleAnalyzer = nextBundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true',
-});
+const nextConfig = {
+  webpack(config, { isServer }) {
+    if (!isServer) {
+      if (!Array.isArray(config.externals)) config.externals = [];
+      config.externals.push({ "mapbox-gl": "mapboxgl" });
+    }
+    return config;
+  },
+};
 
-const nextConfig = {};
-
-export default withBundleAnalyzer(nextConfig);
+export default withBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+})(nextConfig);
