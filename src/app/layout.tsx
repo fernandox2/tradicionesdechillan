@@ -11,8 +11,8 @@ import {
 } from "@/config/fonts";
 import { Provider } from "@/components";
 
-import { MapboxScripts } from "@/components/home/map/MapboxScript";
 import GoogleAnalytics from "@/components/Analytics";
+import Head from "next/head";
 
 export const metadata: Metadata = {
   title: {
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "imgs/favicon.ico",
     shortcut: "imgs/favicon.ico",
-    apple: "imgs/apple-touch-icon.png",
+    apple: "imgs/icono-tradiciones.webp",
   },
 };
 
@@ -34,10 +34,9 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <head>
+      <Head>
         <GoogleAnalytics trackingId={process.env.NEXT_PUBLIC_GTM_ID ?? ""} />
-        <MapboxScripts />
-      </head>
+        </Head>
 
       <body
         className={`${inter.className} ${avenir_medium.variable} ${nickainley.variable} ${sequel.variable} ${avenir_light.variable}`}
