@@ -11,7 +11,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 const images = [
-  "/imgs/home-slider/home-slider-3.webp",
+  "/imgs/home-slider/home-slider-3.jpg",
   "/imgs/home-slider/home-slider-1.jpg",
   "/imgs/home-slider/home-slider-2.jpg",
 ];
