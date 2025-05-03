@@ -5,7 +5,6 @@ import {
   OurMark,
   ProductPremium,
   TopMenu,
-  HomeSlider,
   ProductFormat,
   Footer,
   Contact,
@@ -29,7 +28,7 @@ export const metadata = {
     siteName: "Longanizas Tradiciones de Chillán",
     images: [
       {
-        url: "/imgs/longa-900.webp",
+        url: "/imgs/longa-900.png",
         width: 800,
         height: 600,
         alt: "Fábrica de Longanizas Premium - Sabores Tradicionales",
@@ -43,7 +42,7 @@ export const metadata = {
     title: "Tradiciones de Chillán | Fábrica de Longanizas Premium",
     description:
       "Saborea nuestras longanizas artesanales premium, una fusión de tradición y calidad en cada porción.",
-    images: ["/imgs/longa-900.webp"],
+    images: ["/imgs/longa-900.png"],
   },
 };
 
@@ -71,6 +70,14 @@ export default async function HomePage({ searchParams }: Props) {
     {
       loading: () => <p>Cargando mapa...</p>, // Opcional: Muestra algo mientras carga
       ssr: false 
+    }
+  );
+
+  const HomeSlider = dynamic(
+    () => import("@/components/home/home-slider/HomeSlider").then(mod => mod.HomeSlider),
+    {
+      ssr: false,
+      loading: () => <div className="h-[300px]">Cargando slider…</div>,
     }
   );
 

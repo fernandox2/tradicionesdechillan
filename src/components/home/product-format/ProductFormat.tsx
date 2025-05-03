@@ -40,7 +40,7 @@ export const ProductFormat = ({ id }: Props) => {
           <Image
             width={630}
             height={490}
-            src="/imgs/longa-900.webp"
+            src="/imgs/longa-900.png"
             alt="Longaniza Premium 900 Grs"
             className="w-[630px] h-auto"
           />
@@ -50,7 +50,7 @@ export const ProductFormat = ({ id }: Props) => {
           <Image
             width={440}
             height={490}
-            src="/imgs/longa-450.webp"
+            src="/imgs/longa-450.png"
             alt="Longaniza Premium 450 Grs"
             className="w-[440px] h-auto"
           />
@@ -60,7 +60,7 @@ export const ProductFormat = ({ id }: Props) => {
           <Image
             width={278}
             height={490}
-            src="/imgs/longa-250.webp"
+            src="/imgs/longa-250.png"
             alt="Longaniza Premium 250 Grs"
             className="w-[278px] h-auto"
           />
