@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-
 import { getPaginatedProducts } from "@/actions";
 import {
   OurMark,
@@ -9,14 +8,12 @@ import {
   Footer,
   Contact,
   Blog,
-  Sidebar,
 } from "@/components";
 import { getFakeLocales } from "@/data/fake-data";
-import { auth } from "@/auth.config";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 
 export const metadata = {
-  metadataBase: new URL('https://www.tradicionesdechillan.cl'),
+  metadataBase: new URL("https://www.tradicionesdechillan.cl"),
   title: "Tradiciones de Chillán | Fábrica de Longanizas Premium",
   description:
     "Descubre nuestras longanizas artesanales premium, elaboradas con recetas tradicionales que garantizan calidad y autenticidad en cada bocado.",
@@ -46,45 +43,45 @@ export const metadata = {
   },
 };
 
+export const dynamic = "force-static";
+export const revalidate = 3600;
+
 interface Props {
-  searchParams: {
-    page?: string;
-  };
+  searchParams: { page?: string };
 }
 
 export default async function HomePage({ searchParams }: Props) {
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
 
-  const session = await auth();
-
-  const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN || "";
-
+  const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN ?? "";
   const { products } = await getPaginatedProducts({ page });
 
-  if (products.length === 0) redirect("/");
+  if (!products.length) redirect("/");
 
   const locales = await getFakeLocales();
 
-  const DynamicMapComponent = dynamic(
-    () => import('@/components/home/map/MapSection').then(mod => mod.MapSection),
-    {
-      loading: () => <p>Cargando mapa...</p>, // Opcional: Muestra algo mientras carga
-      ssr: false 
-    }
+  const Sidebar = dynamicImport(
+    () => import("@/components/ui/sidebar/Sidebar").then((m) => m.Sidebar),
+    { ssr: false }
   );
 
-  const HomeSlider = dynamic(
-    () => import("@/components/home/home-slider/HomeSlider").then(mod => mod.HomeSlider),
-    {
-      ssr: false,
-      loading: () => <div className="h-[300px]">Cargando slider…</div>,
-    }
+  const DynamicMapComponent = dynamicImport(
+    () => import("@/components/home/map/MapSection").then((m) => m.MapSection),
+    { ssr: false, loading: () => <p>Cargando mapa…</p> }
+  );
+
+  const HomeSlider = dynamicImport(
+    () =>
+      import("@/components/home/home-slider/HomeSlider").then(
+        (m) => m.HomeSlider
+      ),
+    { ssr: false, loading: () => <div className="h-[300px]">Cargando slider…</div> }
   );
 
   return (
     <div className="max-w-[1440px] mx-auto flex flex-col items-center bg-white">
       <TopMenu />
-      <Sidebar session={session} />
+      <Sidebar />
       <HomeSlider />
       <OurMark id="nosotros" />
       <ProductPremium />

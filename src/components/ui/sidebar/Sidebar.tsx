@@ -2,6 +2,8 @@
 
 import React from "react";
 
+import { useSession } from "next-auth/react";
+
 import Link from "next/link";
 
 import type { Session } from "next-auth";
@@ -27,11 +29,10 @@ import {
 } from "react-icons/io5";
 import { avenir_book } from "@/config/fonts";
 
-interface Props {
-  session: Session | null;
-}
 
-export const Sidebar = ({ session }: Props) => {
+export const Sidebar = () => {
+  const { data: session } = useSession();
+  
   const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen);
   const closeMenu = useUIStore((state) => state.closeSidemenu);
 
