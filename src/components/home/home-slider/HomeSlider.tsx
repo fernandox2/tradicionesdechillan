@@ -20,7 +20,7 @@ export const HomeSlider = () => {
   const [activeSlide, setActiveSlide] = React.useState(0);
 
   return (
-    <div className="relative w-full max-w-[1440px] max-h-[700px]">
+    <div className="relative w-full max-w-[1440px] lg:max-h-[700px] max-h-[500px]">
       {activeSlide === 2 && (
         <Image
           width={59}
@@ -74,18 +74,15 @@ export const HomeSlider = () => {
       >
         {images.map((src, index) => (
           <SwiperSlide key={index}>
-            <div className="w-full h-[700px]">
-              {" "}
-              {/* Altura responsiva aquí */}
+            <div className="w-full h-[500px] lg:h-[700px]">
               <Image
                 priority={index === 0}
                 src={src}
                 alt={`Slide ${index + 1}`}
-                width={1440} // Sigue siendo necesario para la proporción original
-                height={700} // Sigue siendo necesario para la proporción original
+                width={1440}
+                height={700}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1440px"
-                className="block w-full h-full object-cover object-bottom" // Imagen llena el div (h-full)
-                // Sin style height aquí
+                className="block w-full h-full object-cover object-bottom"
               />
             </div>
           </SwiperSlide>
@@ -95,11 +92,17 @@ export const HomeSlider = () => {
       <style jsx global>{`
         .swiper-pagination {
           position: absolute;
-          bottom: 250px !important;
+          bottom: 420px !important;
           left: 0;
           right: 0;
           text-align: center;
           z-index: 10 !important;
+        }
+
+        @media (min-width: 1024px) {
+          .swiper-pagination {
+            bottom: 250px !important;
+          }
         }
 
         .swiper-pagination-bullet {
