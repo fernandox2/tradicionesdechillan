@@ -76,7 +76,7 @@ export default async function HomePage({ searchParams }: Props) {
       import("@/components/home/home-slider/HomeSlider").then(
         (m) => m.HomeSlider
       ),
-    { ssr: false, loading: () => <div className="h-[300px]">Cargando slider…</div> }
+    { ssr: true, loading: () => <div className="h-[300px]">Cargando slider…</div> }
   );
 
   return (
