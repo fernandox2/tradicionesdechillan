@@ -111,7 +111,11 @@ export const Blog = ({ id }: Props) => {
               }`}
             >
               <span
-                className={`${avenir_black.className} text-[16px] text-black uppercase hidden xl:block`}
+                className={`${
+                  avenir_black.className
+                } text-[16px] uppercase hidden xl:block ${
+                  i + 1 === 3 ? "text-white" : "text-black"
+                }`}
               >
                 {(() => {
                   const words = articulo.title.split(" ");
@@ -121,7 +125,11 @@ export const Blog = ({ id }: Props) => {
                 })()}
               </span>
               <span
-                className={`${avenir_black.className} xl:text-[16px] lg:text-[12px] text-black uppercase lg:block xl:hidden`}
+                className={`${
+                  avenir_black.className
+                } xl:text-[16px] lg:text-[12px] uppercase lg:block xl:hidden ${
+                  i + 1 === 3 ? "text-white" : "text-black"
+                }`}
               >
                 {(() => {
                   const words = articulo.title.split(" ");
