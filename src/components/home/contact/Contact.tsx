@@ -77,7 +77,14 @@ export const Contact = ({ id }: { id: string }) => {
             })} className="p-2 border rounded h-[50px] focus:outline-none" />
             {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
 
-            <select {...register("foundBy", { required: "Este campo es obligatorio" })} className="p-2 border rounded h-[50px] focus:outline-none">
+            <label htmlFor="foundBy" className="sr-only">
+              ¿Dónde nos encontraste?
+            </label>
+            <select
+              id="foundBy"
+              {...register("foundBy", { required: "Este campo es obligatorio" })}
+              className="p-2 border rounded h-[50px] focus:outline-none"
+            >
               <option value="">¿Dónde nos encontraste?</option>
               <option value="instagram">Instagram</option>
               <option value="facebook">Facebook</option>
