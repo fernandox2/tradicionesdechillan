@@ -23,7 +23,6 @@ export const HomeSlider = () => {
     <div className="relative w-full max-w-[1440px] max-h-[700px]">
       {activeSlide === 2 && (
         <Image
-          priority
           width={59}
           height={120}
           src="/imgs/bandera1.webp"
@@ -33,7 +32,6 @@ export const HomeSlider = () => {
       )}
       {activeSlide === 1 && (
         <Image
-          priority
           width={242}
           height={349}
           src="/imgs/home-slider/label.webp"
@@ -43,7 +41,6 @@ export const HomeSlider = () => {
       )}
       {activeSlide === 2 && (
         <Image
-          priority
           width={514}
           height={270}
           src="/imgs/home-slider/label-2.webp"
@@ -54,7 +51,6 @@ export const HomeSlider = () => {
 
       {activeSlide === 0 && (
         <Image
-          priority
           width={299}
           height={401}
           src="/imgs/home-slider/label-3.png"
@@ -79,11 +75,12 @@ export const HomeSlider = () => {
         {images.map((src, index) => (
           <SwiperSlide key={index}>
             <Image
-              priority
+              priority={index === 0}
               src={src}
               alt={`Slide ${index + 1}`}
               width={1440}
               height={700}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1440px"
               style={{
                 display: "block",
                 width: "100%",
