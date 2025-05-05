@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { GoogleTagManager } from '@next/third-parties/google'
+
 import "./globals.css";
 
 import {
@@ -11,8 +13,6 @@ import {
 } from "@/config/fonts";
 import { Provider } from "@/components";
 
-import GoogleAnalytics from "@/components/Analytics";
-import Head from "next/head";
 
 export const metadata: Metadata = {
   title: {
@@ -34,10 +34,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <Head>
-        <GoogleAnalytics trackingId={process.env.NEXT_PUBLIC_GTM_ID ?? ""} />
-        </Head>
-
+      <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID!} />
       <body
         className={`${inter.className} ${avenir_medium.variable} ${nickainley.variable} ${sequel.variable} ${avenir_light.variable}`}
       >
