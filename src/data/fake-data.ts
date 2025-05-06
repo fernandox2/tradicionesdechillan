@@ -7,7 +7,7 @@ export const locales: Branch[] = [
     lng: -72.10119943187311,
     image: "/imgs/icono-tradiciones.webp",
     address: "Mercado de Chillán, Local 42",
-    phone: "+56 9 362 81 597",
+    phone: "+56 9 362 81 579",
     schedule: "Lunes a Domingo 10:00 - 20:00",
     website: "https://example.com/local1",
   },
