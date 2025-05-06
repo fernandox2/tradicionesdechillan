@@ -64,14 +64,14 @@ export const Footer = () => {
             className="w-10 h-10"
           />
           <Link
-            href="https://wa.me/56987654321"
+            href="https://wa.me/56935683255"
             target="_blank"
             rel="noopener noreferrer"
           >
             <span
               className={`${avenir_book.className} lg:text-[30px] md:text-[36px] text-[30px] text-white mr-20`}
             >
-              +56 987 654 321
+              +56 935 683 255
             </span>
           </Link>
         </div>
