@@ -22,73 +22,109 @@ export const Pagination = ({ totalPages }: Props) => {
 
   const allPages = generatePaginationNumbers(currentPage, totalPages);
 
-  const createPageUrl = (pageNumber: number | string) => {
+  const prevPageUrl = () => {
     const params = new URLSearchParams(searchParams);
-
-    if (pageNumber === "...") {
-      return `${pathname}?${params.toString()}`;
-    }
-
-    if (+pageNumber <= 0) {
-      return `${pathname}`; // href="/kid"
-    }
-
-    if (+pageNumber > totalPages) {
-      return `${pathname}?${params.toString()}`;
-    }
-
-    params.set("page", String(pageNumber));
+    const prevPageNumber = currentPage - 1;
+    params.set("page", String(prevPageNumber < 1 ? 1 : prevPageNumber));
     return `${pathname}?${params.toString()}`;
-  };
+};
+
+const nextPageUrl = () => {
+    const params = new URLSearchParams(searchParams);
+    const nextPageNumber = currentPage + 1;
+    params.set("page", String(nextPageNumber > totalPages ? totalPages : nextPageNumber));
+    return `${pathname}?${params.toString()}`;
+};
+
+const createPageUrlForPageNumber = (pageNumber: number | string) => {
+  const params = new URLSearchParams(searchParams);
+  if (typeof pageNumber === "string" && pageNumber === "...") {
+    return "#"; 
+  }
+
+  let targetPage = Number(pageNumber);
+
+  if (targetPage < 1) targetPage = 1;
+  if (targetPage > totalPages) targetPage = totalPages;
+  
+  params.set("page", String(targetPage));
+  return `${pathname}?${params.toString()}`;
+};
 
   return (
-    <div className="flex text-center justify-center mt-10 mb-32">
-      <nav aria-label="Page navigation example">
-        <ul className="flex list-style-none">
-          
-          <li className="page-item">
-            <Link
-              className="page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
-              href={createPageUrl(currentPage - 1)}
-            >
-              <IoChevronBackOutline size={30} />
-            </Link>
-          </li>
+   
+    <div className="flex items-center justify-end bg-white px-4">
+     
+      <div>
+        <nav
+          className="isolate inline-flex -space-x-px rounded-md shadow-sm"
+          aria-label="Pagination"
+        >
+          <Link
+            href={prevPageUrl()}
+            className={clsx(
+              "relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:ring-gray-300 dark:text-gray-300 dark:hover:bg-gray-100",
+              {
+                "pointer-events-none opacity-60": currentPage <= 1,
+              }
+            )}
+            aria-disabled={currentPage <= 1}
+            tabIndex={currentPage <= 1 ? -1 : undefined}
+          >
+            <span className="sr-only">Previous</span>
+            <IoChevronBackOutline className="h-5 w-5" aria-hidden="true" />
+          </Link>
 
-          {
-            allPages.map((page, i) => (
-
-              <li key={ page + '-'+i} className="page-item">
-                <Link
-                  className={
-                    clsx(
-                        "page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none",
-                        {
-                            'bg-blue-600 shadow-sm text-white hover:text-white hover:bg-blue-700': page === currentPage
-                        }
-                    )
-                  }
-                  href={createPageUrl(page)}
+          {allPages.map((page, index) => {
+            if (page === "...") {
+              return (
+                <span
+                  key={`ellipsis-${index}`}
+                  className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0 dark:ring-gray-600 dark:text-gray-400"
                 >
-                  { page }
-                </Link>
-              </li>
+                  ...
+                </span>
+              );
+            }
 
-            ))
-          }
-          
+            const isCurrent = page === currentPage;
+            return (
+              <Link
+                key={page}
+                href={createPageUrlForPageNumber(page)}
+                aria-current={isCurrent ? "page" : undefined}
+                className={clsx(
+                  "relative inline-flex items-center px-4 py-2 text-sm font-semibold focus:z-20 focus:outline-offset-0",
+                  {
+                    "z-10 bg-red-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-red-500":
+                      isCurrent,
+                    "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:text-gray-500 dark:ring-gray-300 dark:hover:bg-gray-100":
+                      !isCurrent,
+                  }
+                )}
+              >
+                {page}
+              </Link>
+            );
+          })}
 
-          <li className="page-item">
-            <Link
-              className="page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
-              href={createPageUrl(currentPage + 1)}
-            >
-              <IoChevronForwardOutline size={30} />
-            </Link>
-          </li>
-
-        </ul>
-      </nav>
+          <Link
+            href={nextPageUrl()}
+            className={clsx(
+              "relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:ring-gray-300 dark:text-gray-300 dark:hover:bg-gray-100",
+              {
+                "pointer-events-none opacity-60": currentPage >= totalPages,
+              }
+            )}
+            aria-disabled={currentPage >= totalPages}
+            tabIndex={currentPage >= totalPages ? -1 : undefined}
+          >
+            <span className="sr-only">Next</span>
+            <IoChevronForwardOutline className="h-5 w-5" aria-hidden="true" />
+          </Link>
+        </nav>
+      </div>
     </div>
   );
 };
+
