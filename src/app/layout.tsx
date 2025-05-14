@@ -11,7 +11,7 @@ import {
 } from "@/config/fonts";
 import { Provider } from "@/components";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
-
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: {
@@ -37,7 +37,10 @@ export default async function RootLayout({
       <body
         className={`${inter.className} ${avenir_medium.variable} ${nickainley.variable} ${sequel.variable} ${avenir_light.variable}`}
       >
-        <Provider>{children}</Provider>
+        <Provider>
+          <Toaster position="top-right" />
+          {children}
+        </Provider>
       </body>
     </html>
   );
