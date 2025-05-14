@@ -15,6 +15,9 @@ enum Size {
   XL
   XXL
   XXXL
+  NINE_HUNDRED_GRAMS
+  FOUR_HUNDRED_FIFTY_GRAMS
+  TWO_HUNDRED_FIFTY_GRAMS
 }
 
 enum Gender {
@@ -27,6 +30,7 @@ enum Gender {
 enum Role {
   admin
   user
+  distributor
 }
 
 model Category {
@@ -44,7 +48,7 @@ model Product {
   sizes       Size[]   @default([])
   slug        String   @unique
   tags        String[] @default([])
-  gender      Gender
+  gender      Gender?
 
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
