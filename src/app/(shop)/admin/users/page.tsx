@@ -33,18 +33,55 @@ export default async function ListUserPage({ searchParams }: Props) {
   if (!ok) redirect("/");
 
   return (
-    <>
-     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <Title title="Users" />
+    <div className=" bg-slate-50 py-8 sm:py-12 px-4 flex justify-center items-start">
+      
+    <div className="w-full max-w-4xl bg-white shadow-lg rounded-xl p-6 md:p-8">
+      
+      <div className="mb-6 md:mb-8">
+        <Title title="Usuarios" subtitle="Visualiza, busca y gestiona la información de los usuarios." />
+      </div>
 
-      <div className="mb-10 overflow-x-auto">
-        <Filters placeholder="Buscar por nombre o email..." />
-        <div className="mt-4 mb-4">
-          <UsersTable users={users as User[]} />{" "}
+      <div className="mb-6">
+        <Filters placeholder="Buscar por nombre o correo electrónico..." />
+      </div>
+
+      <div className="border border-slate-200 rounded-lg overflow-x-auto">
+        {users.length > 0 ? (
+          <UsersTable users={users as User[]} />
+        ) : (
+          <div className="text-center py-10 px-4">
+            <svg 
+              className="mx-auto h-12 w-12 text-slate-400" 
+              xmlns="http://www.w3.org/2000/svg" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              strokeWidth="1.5" 
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 19.5L21 21" /> 
+            </svg>
+            <h3 className="mt-4 text-md font-semibold text-slate-800">No se encontraron usuarios</h3>
+            <p className="mt-1 text-sm text-slate-500">
+              Prueba con otros términos de búsqueda o verifica más tarde.
+            </p>
+          </div>
+        )}
+      </div>
+  
+        <div className="mt-6 md:mt-4 flex justify-between items-center">
+         
+          {users.length > 1 && (
+            <p className="text-sm text-slate-500 ml-4">
+              Total de usuarios: {users.length}
+            </p>
+          )}
+          
+          <Pagination totalPages={totalPages} />
+         
         </div>
-        <Pagination totalPages={totalPages} />
-      </div>
-      </div>
-    </>
+  
+    </div>
+  </div>
   );
 }

@@ -9,7 +9,7 @@ export interface Product {
     tags: string[];
     title: string;
     //todo: type: ValidTypes;
-    gender?: Category | null;
+    gender: Category | null;
 }
 
 export interface CartItem {
@@ -18,6 +18,22 @@ export interface CartItem {
     size: Size;
 }
 
-export type Category = 'men'|'women'|'kid'|'unisex';
+export interface CartProduct {
+    id: string;
+    slug: string;
+    title: string;
+    price: number;
+    quantity: number;
+    size: Size;
+    image: string;
+  }
+
+export interface ProductImage {
+    id: number;
+    url: string;
+    productId: string;
+  }
+
+type Category = 'men'|'women'|'kid'|'unisex';
 export type Size = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL'|'NINE_HUNDRED_GRAMS'|'FOUR_HUNDRED_FIFTY_GRAMS'|'TWO_HUNDRED_FIFTY_GRAMS';
 export type ValidTypes = 'shirts'|'pants'|'hoodies'|'hats';

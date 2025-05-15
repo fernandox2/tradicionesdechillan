@@ -2,6 +2,9 @@
 import withBundleAnalyzer from "@next/bundle-analyzer";
 
 const nextConfig = {
+  images: {
+    domains: ['res.cloudinary.com'],
+  },
   webpack(config, { isServer }) {
     if (!isServer) {
       if (!Array.isArray(config.externals)) config.externals = [];

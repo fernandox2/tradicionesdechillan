@@ -7,10 +7,10 @@ import { IoSearchOutline, IoAddCircleOutline } from 'react-icons/io5';
 
 interface Props {
     placeholder?: string;
-    addUserHref?: string;
+    addProductHref?: string;
   }
 
-export const Filters = ({ placeholder = "Buscar por nombre o email...",  addUserHref = "/admin/users/add" }: Props) => {
+export const Filters = ({ placeholder = "Buscar por nombre o email...",  addProductHref = "/admin/products/add" }: Props) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -49,11 +49,11 @@ export const Filters = ({ placeholder = "Buscar por nombre o email...",  addUser
       </div>
 
       <Link
-        href={addUserHref}
+        href={addProductHref}
         className="flex items-center justify-center px-3 py-2.5 sm:px-4 sm:py-3 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:ring-blue-300 dark:bg-red-500 dark:hover:bg-red-600 focus:outline-none dark:focus:ring-red-700 whitespace-nowrap"
       >
         <IoAddCircleOutline className="w-5 h-5 mr-0 sm:mr-2" />
-        <span className="hidden sm:inline">Agregar Usuario</span>
+        <span className="hidden sm:inline">Agregar Producto</span>
         <span className="sm:hidden">Agregar</span>
       </Link>
     </div>
