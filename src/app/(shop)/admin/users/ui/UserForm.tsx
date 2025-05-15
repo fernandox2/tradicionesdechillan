@@ -13,15 +13,28 @@ interface UserFormProps {
   availableRoles?: Role[];
 }
 
-function SubmitButton({ isEditing }: { isEditing: boolean }) {
+const SubmitButton = ({ isEditing }: { isEditing: boolean }) => {
   const { pending } = useFormStatus();
   return (
     <button
       type="submit"
       disabled={pending}
-      className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-gray-400"
+      className="px-6 py-2 bg-red-600 text-white font-semibold rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:bg-gray-400"
     >
       {pending ? (isEditing ? 'Actualizando...' : 'Creando...') : (isEditing ? 'Actualizar Usuario' : 'Crear Usuario')}
+    </button>
+  );
+}
+
+const BackButton = () => {
+  const router = useRouter();
+  return (
+    <button
+      type="button" // Importante que sea type="button" para no enviar el formulario
+      onClick={() => router.back()}
+      className="px-6 py-2 bg-gray-600 text-white font-semibold rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:bg-gray-400"
+    >
+      Volver
     </button>
   );
 }
@@ -50,7 +63,7 @@ export default function UserForm({ user, availableRoles = Object.values(Role) }:
   const isEditing = !!user;
 
   return (
-    <form action={formAction} className="space-y-6 bg-white p-8 shadow-xl rounded-lg">
+    <form action={formAction} className="space-y-4 ">
       {user?.id && <input type="hidden" name="id" value={user.id} />}
 
       <div>
@@ -151,7 +164,8 @@ export default function UserForm({ user, availableRoles = Object.values(Role) }:
       )}
 
 
-      <div className="flex items-center justify-end pt-4">
+      <div className="flex items-center justify-between pt-4">
+      <BackButton />
         <SubmitButton isEditing={isEditing} />
       </div>
     </form>

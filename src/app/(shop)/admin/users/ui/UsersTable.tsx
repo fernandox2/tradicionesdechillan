@@ -1,7 +1,6 @@
-// src/components/users/UsersTable.tsx
 import Link from 'next/link';
 import type { User } from '@/interfaces';
-import { IoPencil, IoEyeOutline } from 'react-icons/io5'; // Iconos para las acciones
+import { IoPencil } from 'react-icons/io5';
 
 interface UsersTableProps {
   users: User[];
@@ -9,7 +8,7 @@ interface UsersTableProps {
 
 export const UsersTable = ({ users }: UsersTableProps) => {
   return (
-    <div className="overflow-x-auto shadow-md sm:rounded-lg"> {/* Contenedor con sombra y bordes redondeados */}
+    <div className="overflow-x-auto shadow-md sm:rounded-lg">
     <table className="min-w-full text-sm text-left text-gray-700 dark:text-gray-700">
       <thead className="text-xs border text-gray-700 uppercase bg-white dark:bg-gray-200 dark:text-gray-600 border-b dark:border-gray-300">
         <tr>
@@ -54,15 +53,14 @@ export const UsersTable = ({ users }: UsersTableProps) => {
                 title="Editar usuario"
                 className="font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors duration-150 ease-in-out inline-flex items-center"
               >
-                <IoPencil size={16} className="mr-1" /> {/* Tamaño de icono ligeramente reducido */}
+                <IoPencil size={16} className="mr-1" />
                 Editar
               </Link>
             </td>
           </tr>
         ))}
-        {/* Fila para cuando no hay usuarios */}
         {users.length === 0 && (
-          <tr className="bg-white dark:bg-gray-800">
+          <tr className="bg-white dark:bg-gray-300 border">
             <td colSpan={5} className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
               No se encontraron usuarios.
             </td>
