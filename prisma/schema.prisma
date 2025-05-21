@@ -33,6 +33,29 @@ enum Role {
   distributor
 }
 
+enum BlogCategory {
+  moda
+  estilo_de_vida
+  viajes
+  comida
+  tecnologia
+  salud
+  fitness
+  belleza
+  entretenimiento
+  educacion
+  deportes
+  arte
+  musica
+  ciencia
+  negocios
+  fotografia
+  literatura
+  historia
+  naturaleza
+  cine
+}
+
 model Category {
   id      String    @id @default(uuid())
   name    String    @unique
@@ -75,8 +98,12 @@ model User {
   role          Role      @default(user)
   image         String?
 
+  Blog Blog[]
+
   address UserAddress?
   Order   Order[]
+
+  Branch Branch[]
 }
 
 model Country {
@@ -153,4 +180,33 @@ model OrderAddress {
 
   order   Order  @relation(fields: [orderId], references: [id])
   orderId String @unique
+}
+
+model Blog {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  image     String
+  category  BlogCategory[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+}
+
+model Branch {
+  id      String @id @default(uuid())
+  name    String
+  address String
+  phone   String
+  email   String
+  lat     Float
+  lng     Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
 }
