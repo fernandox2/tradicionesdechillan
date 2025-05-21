@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 import Link from "next/link";
 
@@ -31,8 +31,8 @@ import { avenir_book } from "@/config/fonts";
 
 
 export const Sidebar = () => {
-  const { data: session } = useSession();
-  
+  const { data: session, status } = useSession();
+
   const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen);
   const closeMenu = useUIStore((state) => state.closeSidemenu);
 
@@ -41,7 +41,7 @@ export const Sidebar = () => {
       {/* background black */}
       {isSideMenuOpen && (
         <div
-          className="fixed top-0 left-0 w-screen h-screen z-10 bg-black opacity-30"
+          className="fixed top-0 left-0 w-screen h-screen z-20 bg-black opacity-30"
           onClick={closeMenu}
         />
       )}
@@ -172,8 +172,8 @@ export const Sidebar = () => {
         {session && (
           <button
             className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
-            onClick={() => {
-              logout();
+            onClick={async () => {
+              await signOut({ redirect: false });
               closeMenu();
             }}
           >
@@ -181,6 +181,7 @@ export const Sidebar = () => {
             <span className="ml-3 text-xl">Salir</span>
           </button>
         )}
+
 
         {/* Linea de Separacion */}
         {session && session.user.role === "admin" && (
