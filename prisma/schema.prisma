@@ -185,6 +185,7 @@ model OrderAddress {
 model Blog {
   id        String   @id @default(uuid())
   title     String
+  slug      String   @unique
   content   String
   image     String
   category  BlogCategory[]

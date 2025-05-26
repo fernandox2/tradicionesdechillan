@@ -15,6 +15,13 @@
   "dependencies": {
     "@next/third-parties": "^15.3.1",
     "@prisma/client": "^5.13.0",
+    "@tailwindcss/typography": "^0.5.16",
+    "@tiptap/extension-image": "^2.12.0",
+    "@tiptap/extension-placeholder": "^2.12.0",
+    "@tiptap/extension-text-align": "^2.12.0",
+    "@tiptap/pm": "^2.12.0",
+    "@tiptap/react": "^2.12.0",
+    "@tiptap/starter-kit": "^2.12.0",
     "axios": "^1.8.3",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.6.1",
@@ -33,6 +40,7 @@
     "transbank-sdk": "^5.0.0",
     "tweetnacl": "^1.0.3",
     "tweetnacl-util": "^0.15.1",
+    "uuid": "^11.1.0",
     "zod": "^3.24.1",
     "zustand": "^4.5.2"
   },
