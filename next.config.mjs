@@ -3,7 +3,14 @@ import withBundleAnalyzer from "@next/bundle-analyzer";
 
 const nextConfig = {
   images: {
-    domains: ['res.cloudinary.com'],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
   },
   webpack(config, { isServer }) {
     if (!isServer) {

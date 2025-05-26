@@ -211,7 +211,6 @@ export const getPaginatedProductsAdmin = async ({
   }
 };
 
-
 export async function upsertProductAction(
   _prevState: any,
   formData: FormData
