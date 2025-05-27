@@ -2,22 +2,52 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { IoPencil, IoDocumentTextOutline } from "react-icons/io5";
+import { IoPencil, IoDocumentTextOutline, IoTrashOutline } from "react-icons/io5";
 import type { Article } from "@/interfaces";
+import { Mensaje } from "@/components/ui/toast/Toast";
+import { useRouter } from "next/navigation";
 
 interface IProps {
   articles: Article[];
 }
 
 export const ArticlesTable = ({ articles }: IProps) => {
+  const router = useRouter();
+
   function stripHtml(html: string) {
-    if (!html) return "";
-    // Crea un elemento temporal y extrae solo el texto
-    const tmp = document.createElement("DIV");
-    tmp.innerHTML = html;
-    return tmp.textContent || tmp.innerText || "";
+   if (!html) return "";
+  return html.replace(/<[^>]*>?/gm, "");
   }
 
+
+  // const handleDeleteArticle = async (articleId: string, articleTitle: string | undefined) => {
+  //   const titleForConfirm = articleTitle || "este artículo";
+  //   if (!window.confirm(`¿Estás seguro de que deseas eliminar el artículo "${titleForConfirm}" y todas sus imágenes asociadas? Esta acción no se puede deshacer.`)) {
+  //     return;
+  //   }
+
+  //   if (!articleId) {
+  //       Mensaje('ID de artículo inválido.', 'error');
+  //       return;
+  //   }
+
+  //   try {
+  //     console.log(`Iniciando eliminación completa del artículo ID: ${articleId}`);
+  //     const result = await deleteArticleAndFtpImagesAction(articleId); // Llama a la Server Action
+
+  //     if (result.ok) {
+  //       Mensaje(result.message || 'Artículo eliminado exitosamente.', 'success', { title: 'Artículo Eliminado' });
+  //       router.refresh(); // Refresca los datos del Server Component actual para actualizar la tabla
+  //     } else {
+  //       Mensaje(result.error || 'No se pudo eliminar el artículo.', 'error', { title: 'Error al Eliminar' });
+  //     }
+  //   } catch (error) {
+  //     console.error("Error al llamar a deleteArticleAndFtpImagesAction desde ArticlesTable:", error);
+  //     Mensaje('Ocurrió un error de red o inesperado al intentar eliminar el artículo.', 'error', { title: 'Error Crítico' });
+  //   }
+  // };
+
+  
   return (
     <div className="overflow-x-auto shadow-md sm:rounded-lg">
       <div className="overflow-x-auto">
@@ -101,7 +131,7 @@ export const ArticlesTable = ({ articles }: IProps) => {
                 </td>
 
                 <td
-                  className="px-4 py-3 md:px-6 w-24 bg-white sticky right-0 z-10"
+                  className="px-4 py-4 md:px-6 w-30 bg-gray-100 sticky right-0 z-10 space-x-2 flex items-stretch"
                   style={{ boxShadow: "-2px 0 5px -2px rgba(0,0,0,0.1)" }}
                 >
                   <Link
@@ -109,10 +139,18 @@ export const ArticlesTable = ({ articles }: IProps) => {
                     title="Editar artículo"
                     className="font-medium text-blue-600 hover:text-blue-800 transition-colors duration-150 ease-in-out inline-flex items-center"
                   >
-                    <IoPencil size={16} className="mr-1" />
-                    Editar
+                    <IoPencil size={16} />
                   </Link>
+                  <button
+                    onClick={() => console.log(article)} 
+                    title="Eliminar sucursal"
+                    className="flex-grow py-3 font-medium text-red-600 hover:text-red-800 transition-colors duration-150 ease-in-out inline-flex items-center justify-center"
+                  >
+                    <IoTrashOutline size={16} />
+                  </button>
                 </td>
+
+                
               </tr>
             ))}
             {articles.length === 0 && (

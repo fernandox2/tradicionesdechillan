@@ -10,6 +10,18 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "tradicionesdechillan.cl",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "ntx-05-lon-cp41.netexplora.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
   webpack(config, { isServer }) {

@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useRef } from "react";
 
 type MenuBarProps = {
@@ -19,29 +20,16 @@ const MenuBar = ({ editor }: MenuBarProps) => {
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
-    const formData = new FormData();
-    formData.append("image", file);
-
-    try {
-      const res = await fetch("/api/upload-image", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!res.ok) throw new Error("Error al subir imagen");
-
-      const data = await res.json();
-      const imageUrl = data.url;
-
-      editor.chain().focus().setImage({ src: imageUrl }).run();
-    } catch (error) {
-      console.error(error);
-      alert("Error al subir la imagen");
-    }
+  
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result as string;
+      editor.chain().focus().setImage({ src: base64 }).run();
+    };
+    reader.readAsDataURL(file);
   };
 
   const buttons = [
@@ -246,7 +234,7 @@ const MenuBar = ({ editor }: MenuBarProps) => {
       accept="image/*"
       style={{ display: "none" }}
       ref={fileInputRef}
-      onChange={handleFileChange}
+      onChange={handleChange}
     />
     <div className="mb-3 flex flex-wrap gap-2">
       {buttons.map(({ action, canRun, isActive, ariaLabel, title, content }, i) => (

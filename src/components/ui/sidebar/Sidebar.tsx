@@ -6,15 +6,11 @@ import { signOut, useSession } from "next-auth/react";
 
 import Link from "next/link";
 
-import type { Session } from "next-auth";
-
 import clsx from "clsx";
 
 import { useUIStore } from "@/store";
-import { logout } from "@/actions";
 
 import {
-  IoBookmarksOutline,
   IoBookOutline,
   IoCartOutline,
   IoCloseOutline,
@@ -30,7 +26,6 @@ import {
   IoTicketOutline,
 } from "react-icons/io5";
 import { avenir_book } from "@/config/fonts";
-
 
 export const Sidebar = () => {
   const { data: session, status } = useSession();
@@ -184,7 +179,6 @@ export const Sidebar = () => {
           </button>
         )}
 
-
         {/* Linea de Separacion */}
         {session && session.user.role === "admin" && (
           <div className=" w-full h-px  bg-gray-200 my-10" />
@@ -230,6 +224,17 @@ export const Sidebar = () => {
           >
             <IoBookOutline size={30} />
             <span className="ml-3 text-xl">Blog</span>
+          </Link>
+        )}
+
+        {session && session.user.role === "admin" && (
+          <Link
+            href="/admin/branch"
+            className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+            onClick={closeMenu}
+          >
+            <IoBookOutline size={30} />
+            <span className="ml-3 text-xl">Distribuidores</span>
           </Link>
         )}
       </nav>
