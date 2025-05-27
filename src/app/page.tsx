@@ -12,6 +12,8 @@ import {
 } from "@/components";
 import { getFakeLocales } from "@/data/fake-data";
 import dynamicImport from "next/dynamic";
+import { getPaginatedArticlesAdmin } from "@/actions/article/article-pagination";
+import { Article } from "@/interfaces";
 
 export const metadata = {
   metadataBase: new URL("https://www.tradicionesdechillan.cl"),
@@ -61,6 +63,8 @@ export default async function HomePage({ searchParams }: Props) {
 
   const locales = await getFakeLocales();
 
+  const articles = await getPaginatedArticlesAdmin({ page: 1, take: 3 });
+
   const Sidebar = dynamicImport(
     () => import("@/components/ui/sidebar/Sidebar").then((m) => m.Sidebar),
     { ssr: false }
@@ -93,7 +97,7 @@ export default async function HomePage({ searchParams }: Props) {
         id="distribuidores"
       />
       <Contact id="contacto" />
-      <Blog id="blog" />
+      <Blog id="blog" articles={articles.articles as unknown as Article[]} />
       <Footer />
     </div>
   );

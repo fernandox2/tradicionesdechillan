@@ -9,9 +9,10 @@ import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
 
 interface Props {
   totalPages: number;
+  className?: string;
 }
 
-export const Pagination = ({ totalPages }: Props) => {
+export const Pagination = ({ totalPages, className }: Props) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -53,7 +54,7 @@ const createPageUrlForPageNumber = (pageNumber: number | string) => {
 
   return (
    
-    <div className="flex items-center justify-end bg-white px-4">
+    <div className={`${className} flex items-center justify-end bg-white`}>
      
       <div>
         <nav
@@ -96,7 +97,7 @@ const createPageUrlForPageNumber = (pageNumber: number | string) => {
                 className={clsx(
                   "relative inline-flex items-center px-4 py-2 text-sm font-semibold focus:z-20 focus:outline-offset-0",
                   {
-                    "z-10 bg-red-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-red-500":
+                    "z-10 bg-orange-650 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-orange-650":
                       isCurrent,
                     "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:text-gray-500 dark:ring-gray-300 dark:hover:bg-gray-100":
                       !isCurrent,

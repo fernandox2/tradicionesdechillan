@@ -1,79 +1,23 @@
 "use client";
 
 import Image from "next/image";
-
 import { avenir_black, avenir_book } from "@/config/fonts";
 import { useRouter } from "next/navigation";
-
-const articulos = [
-  {
-    id: 1,
-    title: `LLEGAMOS AL CORAZÓN DEL MERCADO DE CHILLÁN.`,
-    description: `Muy pronto abriremos nuestro
-nuevo local en el #42, justo al lado
-del emblemático teléfono público
-En el histórico Mercado de Chillán,
-donde confluyen sabores, oficios y
-tradiciones del sur de Chile,
-donde vive la tradición y el buen
-gusto, ahora también estarán las
-auténticas longanizas de
-Tradiciones de Chillán.
-¡Ven por el verdadero sabor de las
-longanizas de Chillán!`,
-    img: "/imgs/img-blog-1.webp",
-    url: "https://www.tradiciones.cl",
-  },
-  {
-    id: 2,
-    title: `EL ORIGEN DE LA LONGANIZA: UN VIAJE DESDE ESPAÑA AL MUNDO.`,
-    description: `La longaniza es un embutido largo
-originario de España, elaborado
-con carne de cerdo picada y
-especias. Su historia se remonta a la
-época romana, donde se
-preparaban embutidos similares.
-Con el tiempo, la longaniza se
-difundió a diversos países,
-adaptándose a las tradiciones y
-gustos locales, convirtiéndose en
-un símbolo gastronómico en
-lugares como Chile, Argentina y
-Filipinas.`,
-    img: "/imgs/img-blog-2.webp",
-    url: "https://www.tradiciones.cl",
-  },
-  {
-    id: 3,
-    title: `LA LONGANIZA DE CHILLÁN:
-ORGULLO Y TRADICIÓN
-CHILENA.`,
-    description: `La ciudad de Chillán, en la Región
-de Ñuble, es reconocida por su
-longaniza, un embutido que ha
-trascendido fronteras y se ha
-convertido en un ícono
-gastronómico de Chile. En 2023, la
-longaniza de Chillán obtuvo la
-Denominación de Origen por parte
-del Instituto Nacional de Propiedad
-Industrial (Inapi), destacando su
-calidad y vínculo con la región.`,
-    img: "/imgs/img-blog-3.webp",
-    url: "https://www.tradiciones.cl",
-  },
-];
+import { Article } from "@/interfaces";
+import truncate from "html-truncate";
 
 interface Props {
   id: string;
+  articles: Article[];
 }
 
-export const Blog = ({ id }: Props) => {
+export const Blog = ({ id, articles }: Props) => {
   const router = useRouter();
 
-  const handleClick = (url: string) => {
-    router.replace(url);
+  const handleClick = (slug: string) => {
+    router.push(`/blog/${slug}`);
   };
+
   return (
     <section
       id={id}
@@ -84,11 +28,11 @@ export const Blog = ({ id }: Props) => {
         height={349}
         src="/imgs/bandera4.webp"
         alt="Bandera Tradiciones"
-        className="absolute lg:top-72 md:left-0 left-10 top-0"
+        className="absolute lg:top-72 left-20 lg:left-0 top-0 md:w-[121px] md:h-[174.5px] lg:w-[242px] lg:h-[349px]"
       />
 
-      <div className="flex md:flex-row flex-col w-full lg:pl-80 lg:pr-20 lg:items-end items-center gap-4 lg:mb-10 md:mt-0 mt-96">
-        {articulos.map((articulo, i) => (
+      <div className="flex md:flex-row flex-col w-full lg:pl-80 lg:pr-20 lg:items-end items-center gap-4 lg:mb-10 md:mt-0 mt-96 md:pt-24 lg:pt-0">
+        {articles.map((articulo, i) => (
           <div
             key={`${articulo.title} - ${i}`}
             className="flex flex-col h-[700px] w-[400px] xl:gap-4 lg:gap-1 p-4"
@@ -96,7 +40,7 @@ export const Blog = ({ id }: Props) => {
             <Image
               height={162}
               width={400}
-              src={articulo.img}
+              src={articulo.image}
               alt={articulo.title}
               className="h-[162px]"
             />
@@ -140,39 +84,29 @@ export const Blog = ({ id }: Props) => {
               </span>
             </div>
 
-            <span
-              className={`${avenir_book.className} text-xl text-white text-justify pt-8 hidden xl:block`}
-            >
-              {(() => {
-                const words = articulo.description.split(" ");
-                return words.length > 50
-                  ? words.slice(0, 50).join(" ") + "..."
-                  : articulo.description;
-              })()}
-            </span>
-            <span
-              className={`${avenir_book.className} text-xl text-white text-justify pt-8 md:hidden block`}
-            >
-              {(() => {
-                const words = articulo.description.split(" ");
-                return words.length > 40
-                  ? words.slice(0, 40).join(" ") + "..."
-                  : articulo.description;
-              })()}
-            </span>
-            <span
-              className={`${avenir_book.className} text-xl text-white text-justify pt-8 lg:block hidden xl:hidden`}
-            >
-              {(() => {
-                const words = articulo.description.split(" ");
-                return words.length > 25
-                  ? words.slice(0, 25).join(" ") + "..."
-                  : articulo.description;
-              })()}
-            </span>
+            <div
+              className={`${avenir_book.className} text-xl text-white text-justify leading-relaxed pt-8 hidden xl:block`}
+              dangerouslySetInnerHTML={{
+                __html: truncate(articulo.content, 300),
+              }}
+            />
 
-            {/* <button
-              onClick={() => handleClick(articulo.url)}
+            <div
+              className={`${avenir_book.className} text-xl text-white text-justify pt-8 md:hidden block`}
+              dangerouslySetInnerHTML={{
+                __html: truncate(articulo.content, 300),
+              }}
+            />
+
+            <div
+              className={`${avenir_book.className} text-xl text-white text-justify pt-8 md:block hidden xl:hidden`}
+              dangerouslySetInnerHTML={{
+                __html: truncate(articulo.content, 200),
+              }}
+            />
+
+            <button
+              onClick={() => handleClick(articulo.slug)}
               className={`${
                 avenir_book.className
               } w-24 min-h-10 text-white md:mt-0 my-5 ${
@@ -184,7 +118,7 @@ export const Blog = ({ id }: Props) => {
               }`}
             >
               Leer Más
-            </button> */}
+            </button>
           </div>
         ))}
       </div>

@@ -7,6 +7,9 @@ export interface Branch {
   address: string;
   phone: string;
   email: string;
+  image: string;
+  schedule: string;
+  website: string;
   lat: number;
   lng: number;
   createdAt: string;

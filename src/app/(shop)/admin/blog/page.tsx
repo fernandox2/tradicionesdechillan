@@ -62,7 +62,7 @@ export default async function ListArticlePage({ searchParams }: Props) {
         {ok && (
           <div className="border border-slate-200 rounded-lg overflow-x-auto">
             {articles.length > 0 ? (
-              <ArticlesTable articles={articles as Article[]} />
+              <ArticlesTable articles={articles as unknown as Article[]} />
             ) : (
               <div className="text-center py-10 px-4">
                 <svg

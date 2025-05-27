@@ -9,5 +9,7 @@ export interface Article {
     author: {
         id: string;
         name: string;
-    }
+    };
+    createdAt?: string;
+    updatedAt?: string;
   }
