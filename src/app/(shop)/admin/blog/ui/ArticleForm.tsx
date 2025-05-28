@@ -15,6 +15,8 @@ import MenuBar from "@/components/MenuBarTiptap";
 import ImageExtension from "@tiptap/extension-image";
 import { deleteImageFTP } from "@/actions/article/delete-article-image";
 import axios from "axios";
+import Link from '@tiptap/extension-link';
+import { TextSelection } from "@tiptap/pm/state";
 
 interface Article {
   id?: string;
@@ -74,6 +76,10 @@ export const ArticleForm = ({ article, userId }: Props) => {
       TextAlign.configure({ types: ["heading", "paragraph"] }),
       Placeholder.configure({ placeholder: "Escribe el contenido..." }),
       ImageExtension,
+      Link.configure({
+        openOnClick: false,
+        linkOnPaste: true,
+      }),
     ],
     content: article.content || "",
     immediatelyRender: false,
@@ -82,6 +88,43 @@ export const ArticleForm = ({ article, userId }: Props) => {
       setValue("content", html, { shouldValidate: true });
     },
   });
+
+  useEffect(() => {
+    if (!editor) return;
+  
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === " " && editor.isActive("link")) {
+        const state = editor.view.state;
+        const tr = state.tr;
+        const { from, to, empty } = state.selection;
+    
+        if (!empty) {
+          return;
+        }
+    
+        tr.insertText(" ", from);
+    
+        const linkMark = state.schema.marks.link;
+        tr.removeMark(from, from + 1, linkMark);
+    
+        editor.view.dispatch(tr);
+    
+        editor.view.focus();
+        const { doc } = editor.view.state;
+        const newPos = from + 1;
+        const selection = TextSelection.create(doc, newPos);
+        editor.view.dispatch(editor.view.state.tr.setSelection(selection));
+    
+        event.preventDefault();
+      }
+    };
+  
+    editor.view.dom.addEventListener("keydown", handleKeyDown);
+  
+    return () => {
+      editor.view.dom.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [editor]);
 
   const { handleSubmit, register, watch, setValue } = useForm<FormInputs>({
     defaultValues: {
