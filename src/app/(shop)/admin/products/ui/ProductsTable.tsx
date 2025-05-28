@@ -6,12 +6,16 @@ import Image from 'next/image';
 import { IoPencil, IoCubeOutline, IoTrashOutline } from 'react-icons/io5';
 import type { Product } from '@/interfaces';
 import { deleteProduct } from '@/actions/product/delete-product';
+import { useRouter } from 'next/navigation';
+
 
 interface ProductsTableProps {
   products: Product[];
 }
 
 export const ProductsTable = ({ products }: ProductsTableProps) => {
+
+  const route = useRouter();
 
   const sizeLabels: Record<string, string> = {
     XS: "XS",
@@ -28,6 +32,7 @@ export const ProductsTable = ({ products }: ProductsTableProps) => {
 
   const eliminarProducto = async (productId: string) => {
      await deleteProduct(productId);
+     route.refresh();
   }
 
   return (
