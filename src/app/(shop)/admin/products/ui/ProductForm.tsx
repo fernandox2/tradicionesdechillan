@@ -9,7 +9,7 @@ import { ProductImage } from "@/components/product/product-image/ProductImage";
 import { createUpdateProduct } from "@/actions/product/create-update-product";
 import { Category } from "@/interfaces/category.interface";
 import { Mensaje } from "@/components/ui/toast/Toast";
-import { deleteProductImage } from "@/actions/product/delete-product-image";
+import { deleteImageFTP, deleteProductImage } from "@/actions/product/delete-product-image";
 
 interface Props {
   product: Partial<Product> & { ProductImage?: ProductWithImage[] };
@@ -114,6 +114,11 @@ export const ProductForm = ({ product, categories }: Props) => {
 
     router.replace(`/admin/products`);
   };
+
+  const deleteImageProducto = async ( id: number, url: string ) => {
+    //elimina la imagen de la tabla productImage y del ftp
+     deleteImageFTP(url, id)
+  }
 
   return (
     <form
@@ -261,7 +266,7 @@ export const ProductForm = ({ product, categories }: Props) => {
 
                   <button
                     type="button"
-                    onClick={() => deleteProductImage(image.id, image.url)}
+                    onClick={() => deleteImageProducto(image.id, image.url)}
                     className="btn-danger w-full rounded-b-xl"
                   >
                     Eliminar

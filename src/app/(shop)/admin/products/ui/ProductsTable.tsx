@@ -1,8 +1,11 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { IoPencil, IoCubeOutline } from 'react-icons/io5';
+import { IoPencil, IoCubeOutline, IoTrashOutline } from 'react-icons/io5';
 import type { Product } from '@/interfaces';
+import { deleteProduct } from '@/actions/product/delete-product';
 
 interface ProductsTableProps {
   products: Product[];
@@ -22,6 +25,10 @@ export const ProductsTable = ({ products }: ProductsTableProps) => {
     FOUR_HUNDRED_FIFTY_GRAMS: "450GRMS",
     TWO_HUNDRED_FIFTY_GRAMS: "250GRMS",
   };
+
+  const eliminarProducto = async (productId: string) => {
+     await deleteProduct(productId);
+  }
 
   return (
     <div className="overflow-x-auto shadow-md sm:rounded-lg">
@@ -96,16 +103,32 @@ export const ProductsTable = ({ products }: ProductsTableProps) => {
              <td className="px-4 py-3 md:px-6 hidden lg:table-cell">
               {product.sizes.map(size => sizeLabels[size] ?? size).join(', ')}
             </td>
-              <td className="px-4 py-3 md:px-6">
-                <Link
-                  href={`/admin/products/edit/${product.slug}`}
-                  title="Editar producto"
-                  className="font-medium text-blue-600 hover:text-blue-800 transition-colors duration-150 ease-in-out inline-flex items-center"
+
+
+            <td
+                  className="px-4 py-4 md:px-6 w-30 bg-gray-100 sticky right-0 z-10 space-x-2 flex items-stretch"
+                  style={{ boxShadow: "-2px 0 5px -2px rgba(0,0,0,0.1)" }}
                 >
-                  <IoPencil size={16} className="mr-1" />
-                  Editar
-                </Link>
-              </td>
+                  <Link
+                    href={`/admin/products/edit/${product.slug}`}
+                    title="Editar artículo"
+                    className="font-medium text-blue-600 hover:text-blue-800 transition-colors duration-150 ease-in-out inline-flex items-center"
+                  >
+                    <IoPencil size={16} />
+                  </Link>
+                  
+                  <button
+                    onClick={() => {
+                      eliminarProducto(product.id)
+                    }}
+                    title="Eliminar articulo"
+                    className="flex-grow py-3 font-medium text-red-600 hover:text-red-800 transition-colors duration-150 ease-in-out inline-flex items-center justify-center"
+                  >
+                    <IoTrashOutline size={16} />
+                  </button>
+                </td>
+
+              
             </tr>
           ))}
           {products.length === 0 && (

@@ -5,6 +5,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import prisma from '@/lib/prisma';
 import { Client } from 'basic-ftp';
+import { getFtpClientAndConnect } from '@/lib/ftp';
 
 export const deleteBlogImage = async (blogId: string) => {
   try {
@@ -46,56 +47,52 @@ export const deleteBlogImage = async (blogId: string) => {
   }
 };
 
-export const deleteImageFTP = async (imageUrl: string, id: string): Promise<{ ok: boolean, error?: string }> => {
+export const deleteImageFTP = async (
+  imageUrl: string,
+  id: string,
+): Promise<{ ok: boolean; error?: string }> => {
+  const fileName = imageUrl.split("/").pop();
+  if (!fileName || fileName.trim() === "" || fileName === "." || fileName === "..") {
+    return { ok: false, error: "Nombre de imagen inválido o URL no válida para eliminación FTP." };
+  }
 
-    const fileName = imageUrl.split('/').pop();
-    if (!fileName || fileName.trim() === "" || fileName === "." || fileName === "..") {
-        return { ok: false, error: 'Nombre de imagen inválido o URL no válida para eliminación FTP.' };
-    }
+  const blog = await prisma.blog.findUnique({
+    where: { id },
+    select: { image: true, slug: true },
+  });
 
-    const blog = await prisma.blog.findUnique({
-      where: { id: id },
-      select: { image: true, slug: true },
+  let client: Client | null = null;
+
+  try {
+    client = await getFtpClientAndConnect();
+
+    await client.remove(fileName);
+
+    revalidatePath(`/admin/blog`);
+
+    await prisma.blog.update({
+      where: { id },
+      data: { image: "" },
     });
 
-    const client = new Client();
-    try {
-        await client.access({
-            host: "ftp.cecinastradicionesdechillan.cl",
-            port: 21,
-            user: "tradicionesftp@tradicionesdechillan.cl",
-            password: "##*q4hB)AACf",
-            secure: true,
-            secureOptions: {
-                rejectUnauthorized: false,
-            },
-        });
-
-        await client.remove(fileName);
-
-        revalidatePath(`/admin/blog`);
-
-        await prisma.blog.update({
-          where: { id: id },
-          data: { image: '' },
-        });
-
-    revalidatePath(`/admin/blog/${blog?.slug}`);
-    revalidatePath(`/blog/${blog?.slug}`);
-        return { ok: true };
-
-    } catch (ftpError: any) {
-        console.error(`Error al eliminar imagen "${fileName}" del servidor FTP:`, ftpError);
-        let userMessage = `No se pudo eliminar la imagen "${fileName}" del servidor FTP.`;
-        if (ftpError.code === 550) {
-            userMessage = `Archivo "${fileName}" no encontrado en el servidor FTP o permiso denegado para eliminar.`;
-        }
-        return { ok: false, error: userMessage };
-    } finally {
-        if (!client.closed) {
-            client.close();
-        }
+    if (blog?.slug) {
+      revalidatePath(`/admin/blog/${blog.slug}`);
+      revalidatePath(`/blog/${blog.slug}`);
     }
+
+    return { ok: true };
+  } catch (ftpError: any) {
+    console.error(`Error al eliminar imagen "${fileName}" del servidor FTP:`, ftpError);
+    let userMessage = `No se pudo eliminar la imagen "${fileName}" del servidor FTP.`;
+    if (ftpError.code === 550) {
+      userMessage = `Archivo "${fileName}" no encontrado en el servidor FTP o permiso denegado para eliminar.`;
+    }
+    return { ok: false, error: userMessage };
+  } finally {
+    if (client && !client.closed) {
+      client.close();
+    }
+  }
 };
 
 async function deleteImageFTPContent(imageUrl: string): Promise<{ ok: boolean, error?: string }> {
