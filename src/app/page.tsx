@@ -57,9 +57,6 @@ export default async function HomePage({ searchParams }: Props) {
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
 
   const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN ?? "";
-  const { products } = await getPaginatedProducts({ page });
-
-  if (!products.length) redirect("/");
 
   const locales = await getFakeLocales();
 
