@@ -36,7 +36,7 @@ interface FormInputs {
   inStock: number;
   sizes: string[];
   tags: string;
-  gender: "men" | "women" | "kid" | "unisex";
+  // gender: "men" | "women" | "kid" | "unisex";
   categoryId: string;
 
   images?: FileList;
@@ -57,7 +57,6 @@ export const ProductForm = ({ product, categories }: Props) => {
       ...product,
       tags: product.tags?.join(", "),
       sizes: product.sizes ?? [],
-      gender: product.gender as "men" | "women" | "kid" | "unisex" | undefined,
       images: undefined,
     },
   });
@@ -87,7 +86,7 @@ export const ProductForm = ({ product, categories }: Props) => {
     formData.append("sizes", productToSave.sizes.toString());
     formData.append("tags", productToSave.tags);
     formData.append("categoryId", productToSave.categoryId);
-    formData.append("gender", productToSave.gender);
+    // formData.append("gender", productToSave.gender);
 
     if (images) {
       for (let i = 0; i < images.length; i++) {
@@ -101,8 +100,9 @@ export const ProductForm = ({ product, categories }: Props) => {
       message,
     } = await createUpdateProduct(formData);
 
+console.log(message)
     if (!ok) {
-      Mensaje("", "error", {
+      Mensaje("holaaa", "error", {
         title: message,
       });
       return;
@@ -169,20 +169,6 @@ export const ProductForm = ({ product, categories }: Props) => {
             className="p-2 border rounded-md bg-gray-200"
             {...register("tags", { required: true })}
           />
-        </div>
-
-        <div className="flex flex-col mb-2">
-          <span>Gender</span>
-          <select
-            className="p-2 border rounded-md bg-gray-200"
-            {...register("gender", { required: true })}
-          >
-            <option value="">[Seleccione]</option>
-            <option value="men">Men</option>
-            <option value="women">Women</option>
-            <option value="kid">Kid</option>
-            <option value="unisex">Unisex</option>
-          </select>
         </div>
 
         <div className="flex flex-col mb-2">

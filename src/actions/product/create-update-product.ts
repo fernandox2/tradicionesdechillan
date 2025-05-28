@@ -24,7 +24,6 @@ const productSchema = z.object({
   categoryId: z.string().uuid(),
   sizes: z.coerce.string().transform( val => val.split(',') ),
   tags: z.string(),
-  gender: z.nativeEnum(Gender), 
 });
 
 export const uploadArticleImage = async (files: File[]): Promise<string[]> => {
@@ -90,6 +89,8 @@ export const createUpdateProduct = async( formData: FormData ) => {
             }
           })
         }
+
+        console.log('chao')
     
         if ( formData.getAll('images') ) {
           const images = await uploadArticleImage(formData.getAll('images') as File[]);
