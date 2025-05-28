@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 import { useForm } from "react-hook-form";
@@ -67,6 +67,8 @@ const blogCategories = [
 
 export const ArticleForm = ({ article, userId }: Props) => {
   const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
 
   const categoriesFromDB = article.category ?? [];
 
@@ -207,6 +209,9 @@ export const ArticleForm = ({ article, userId }: Props) => {
   };
 
   const onSubmit = async (data: FormInputs) => {
+
+    setLoading(true);
+
     const parser = new DOMParser();
     const doc = parser.parseFromString(data.content, "text/html");
 
@@ -261,7 +266,9 @@ export const ArticleForm = ({ article, userId }: Props) => {
     } catch (err) {
       console.error(err);
       Mensaje("", "error", { title: "Error al guardar el artículo" });
-    }
+    } finally {
+    setLoading(false);
+  }
   };
 
   const generateSlug = (text: string): string => {
@@ -388,19 +395,65 @@ export const ArticleForm = ({ article, userId }: Props) => {
 
       <div className="col-span-1 md:col-span-2">
         {article.id ? (
-          <button
-            type="submit"
-            className="bg-blue-600 hover:bg-blue-700 py-3 rounded-md text-white w-full transition-colors"
-          >
-            Actualizar
-          </button>
-        ) : (
-          <button
-            type="submit"
-            className="bg-green-600 hover:bg-green-700 py-3 rounded-md text-white w-full transition-colors"
-          >
-            Guardar
-          </button>
+       <button
+       type="submit"
+       disabled={loading}
+       className="flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50"
+     >
+       {loading && (
+         <svg
+           className="w-5 h-5 animate-spin text-white"
+           xmlns="http://www.w3.org/2000/svg"
+           fill="none"
+           viewBox="0 0 24 24"
+         >
+           <circle
+             className="opacity-25"
+             cx="12"
+             cy="12"
+             r="10"
+             stroke="currentColor"
+             strokeWidth="4"
+           />
+           <path
+             className="opacity-75"
+             fill="currentColor"
+             d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+           />
+         </svg>
+       )}
+       {loading ? "Actualizando..." : "Actualizar"}
+     </button>
+   ) : (
+     <button
+       type="submit"
+       disabled={loading}
+       className="flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50"
+     >
+       {loading && (
+         <svg
+           className="w-5 h-5 animate-spin text-white"
+           xmlns="http://www.w3.org/2000/svg"
+           fill="none"
+           viewBox="0 0 24 24"
+         >
+           <circle
+             className="opacity-25"
+             cx="12"
+             cy="12"
+             r="10"
+             stroke="currentColor"
+             strokeWidth="4"
+           />
+           <path
+             className="opacity-75"
+             fill="currentColor"
+             d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+           />
+         </svg>
+       )}
+       {loading ? "Guardando..." : "Guardar"}
+     </button>
         )}
       </div>
     </form>
