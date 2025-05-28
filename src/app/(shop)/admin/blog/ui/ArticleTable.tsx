@@ -2,10 +2,16 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { IoPencil, IoDocumentTextOutline, IoTrashOutline } from "react-icons/io5";
+import {
+  IoPencil,
+  IoDocumentTextOutline,
+  IoTrashOutline,
+} from "react-icons/io5";
 import type { Article } from "@/interfaces";
 import { Mensaje } from "@/components/ui/toast/Toast";
 import { useRouter } from "next/navigation";
+import { deleteArticle } from "@/actions/article/delete-article";
+import { deleteImageFTP } from "@/actions/article/delete-article-image";
 
 interface IProps {
   articles: Article[];
@@ -15,39 +21,62 @@ export const ArticlesTable = ({ articles }: IProps) => {
   const router = useRouter();
 
   function stripHtml(html: string) {
-   if (!html) return "";
-  return html.replace(/<[^>]*>?/gm, "");
+    if (!html) return "";
+    return html.replace(/<[^>]*>?/gm, "");
   }
 
+  const extractImageUrlsFromHtml = (content: string): string[] => {
+    const regex = /<img[^>]+src=["']([^"']+)["']/g;
+    const urls: string[] = [];
+    let match;
+    while ((match = regex.exec(content)) !== null) {
+      urls.push(match[1]);
+    }
+    return urls;
+  };
 
-  // const handleDeleteArticle = async (articleId: string, articleTitle: string | undefined) => {
-  //   const titleForConfirm = articleTitle || "este artículo";
-  //   if (!window.confirm(`¿Estás seguro de que deseas eliminar el artículo "${titleForConfirm}" y todas sus imágenes asociadas? Esta acción no se puede deshacer.`)) {
-  //     return;
-  //   }
+  const eliminarImagenesFtp = async (
+    articleId: string,
+    content: string,
+    image: string
+  ) => {
+    const contentImageUrls = extractImageUrlsFromHtml(content);
+    const allImageUrls = [...new Set([...contentImageUrls, image])];
 
-  //   if (!articleId) {
-  //       Mensaje('ID de artículo inválido.', 'error');
-  //       return;
-  //   }
+    // Eliminar imágenes del FTP
+    for (const imageUrl of allImageUrls) {
+      const res = await deleteImageFTP(imageUrl, articleId);
+      if (!res.ok) {
+        console.warn("Error eliminando imagen:", res.error);
+      }
+    }
+  };
 
-  //   try {
-  //     console.log(`Iniciando eliminación completa del artículo ID: ${articleId}`);
-  //     const result = await deleteArticleAndFtpImagesAction(articleId); // Llama a la Server Action
+  const handleDeleteArticle = async (
+    articleId: string,
+    content: string,
+    image: string
+  ) => {
+    if (!articleId) {
+      Mensaje("No se encontro el articulo.", "error", {
+        title: "Slug duplicado",
+      });
+      return;
+    }
 
-  //     if (result.ok) {
-  //       Mensaje(result.message || 'Artículo eliminado exitosamente.', 'success', { title: 'Artículo Eliminado' });
-  //       router.refresh(); // Refresca los datos del Server Component actual para actualizar la tabla
-  //     } else {
-  //       Mensaje(result.error || 'No se pudo eliminar el artículo.', 'error', { title: 'Error al Eliminar' });
-  //     }
-  //   } catch (error) {
-  //     console.error("Error al llamar a deleteArticleAndFtpImagesAction desde ArticlesTable:", error);
-  //     Mensaje('Ocurrió un error de red o inesperado al intentar eliminar el artículo.', 'error', { title: 'Error Crítico' });
-  //   }
-  // };
+    if (!confirm("¿Estás seguro de que deseas eliminar este artículo?")) return;
 
-  
+    await eliminarImagenesFtp(articleId, content, image);
+
+    await deleteArticle(articleId);
+
+    Mensaje("Artículo eliminado correctamente.", "success", {
+      title: "Artículo eliminado",
+    });
+
+    router.refresh();
+  };
+
   return (
     <div className="overflow-x-auto shadow-md sm:rounded-lg">
       <div className="overflow-x-auto">
@@ -62,7 +91,7 @@ export const ArticlesTable = ({ articles }: IProps) => {
               <th className="min-w-[150px] px-4 py-3 md:px-6 max-w-xs truncate">
                 Título
               </th>
-              
+
               <th className="w-48 px-4 py-3 md:px-6 hidden md:table-cell truncate">
                 Contenido
               </th>
@@ -142,15 +171,19 @@ export const ArticlesTable = ({ articles }: IProps) => {
                     <IoPencil size={16} />
                   </Link>
                   <button
-                    onClick={() => console.log(article)} 
-                    title="Eliminar sucursal"
+                    onClick={() =>
+                      handleDeleteArticle(
+                        article.id,
+                        article.content,
+                        article.image
+                      )
+                    }
+                    title="Eliminar articulo"
                     className="flex-grow py-3 font-medium text-red-600 hover:text-red-800 transition-colors duration-150 ease-in-out inline-flex items-center justify-center"
                   >
                     <IoTrashOutline size={16} />
                   </button>
                 </td>
-
-                
               </tr>
             ))}
             {articles.length === 0 && (

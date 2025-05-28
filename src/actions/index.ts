@@ -6,7 +6,6 @@ export { getPaginatedProducts } from "./product/product-pagination";
 export { getProductBySlug } from "./product/get-product-by-slug";
 export { getStockBySlug } from "./product/get-stock-by-slug";
 export { getCountries } from "./country/get-countries";
-export { uploadArticleImage } from "./article/upload-article-image";
 export { createUpdateArticle } from "./article/create-update-article";
 export {
   setUserAddress,

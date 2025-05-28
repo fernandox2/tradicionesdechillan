@@ -176,10 +176,10 @@ export const ArticleForm = ({ article, userId }: Props) => {
     const { image, title, slug, categoryId } = data;
 
     if (article?.id) formData.append("id", article.id);
-    formData.append("title", title);
-    formData.append("slug", slug);
-    formData.append("content", contentToSaveToDb);
-    formData.append("authorId", userId);
+      formData.append("title", title);
+      formData.append("slug", slug);
+      formData.append("content", contentToSaveToDb);
+      formData.append("authorId", userId);
 
     if (categoryId?.length) {
       categoryId.forEach((cat) => formData.append("category", cat));
