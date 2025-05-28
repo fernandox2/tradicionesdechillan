@@ -17,6 +17,7 @@
     "@prisma/client": "^5.13.0",
     "@tailwindcss/typography": "^0.5.16",
     "@tiptap/extension-image": "^2.12.0",
+    "@tiptap/extension-link": "^2.12.0",
     "@tiptap/extension-placeholder": "^2.12.0",
     "@tiptap/extension-text-align": "^2.12.0",
     "@tiptap/pm": "^2.12.0",

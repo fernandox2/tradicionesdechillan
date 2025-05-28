@@ -40,7 +40,7 @@ const menuItems: MenuItem[] = [
   {
     id: 5,
     name: "Blog",
-    url: "/#blog",
+    url: "/blog",
   },
   {
     id: 6,

@@ -32,6 +32,19 @@ const MenuBar = ({ editor }: MenuBarProps) => {
     reader.readAsDataURL(file);
   };
 
+  const handleAddLink = () => {
+    const url = window.prompt("Enter the URL");
+  
+    if (!url) return;
+  
+    editor
+      .chain()
+      .focus()
+      .extendMarkRange('link')
+      .setLink({ href: url })
+      .run();
+  };
+
   const buttons = [
     {
       action: () => editor.chain().focus().toggleBold().run(),
@@ -222,6 +235,32 @@ const MenuBar = ({ editor }: MenuBarProps) => {
             <rect x="3" y="4" width="18" height="16" rx="2" ry="2" />
             <circle cx="8.5" cy="10.5" r="1.5" />
             <polyline points="21 15 16 10 5 21" />
+          </svg>
+        ),
+      },
+
+      {
+        action: handleAddLink,
+  canRun: () => {
+    // Sólo activar si hay texto seleccionado
+    return editor.state.selection && !editor.state.selection.empty;
+  },
+  isActive: () => editor.isActive("link"),
+  ariaLabel: "Insert Link",
+  title: "Insert Link",
+        content: (
+          <svg
+            className="w-5 h-5 mx-auto"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M10 14a4 4 0 005.66 0l3.54-3.54a4 4 0 00-5.66-5.66l-1.41 1.41" />
+            <path d="M14 10a4 4 0 00-5.66 0l-3.54 3.54a4 4 0 005.66 5.66l1.41-1.41" />
           </svg>
         ),
       },
