@@ -25,7 +25,12 @@ import {
   IoStorefrontOutline,
   IoTicketOutline,
 } from "react-icons/io5";
+
+import { MdOutlineStorefront } from "react-icons/md";
+import { FaBlog } from "react-icons/fa6";
+
 import { avenir_book } from "@/config/fonts";
+import Image from "next/image";
 
 export const Sidebar = () => {
   const { data: session, status } = useSession();
@@ -189,7 +194,8 @@ export const Sidebar = () => {
             onClick={closeMenu}
             className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
           >
-            <IoShirtOutline size={30} />
+            <Image src={"/imgs/longa.svg"} alt="Longaniza" width={30} height={30} />
+            {/* <IoShirtOutline size={30} /> */}
             <span className="ml-3 text-xl">Productos</span>
           </Link>
         )}
@@ -222,7 +228,8 @@ export const Sidebar = () => {
             className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
             onClick={closeMenu}
           >
-            <IoBookOutline size={30} />
+            <FaBlog size={30} />
+
             <span className="ml-3 text-xl">Blog</span>
           </Link>
         )}
@@ -233,8 +240,9 @@ export const Sidebar = () => {
             className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
             onClick={closeMenu}
           >
-            <IoBookOutline size={30} />
-            <span className="ml-3 text-xl">Distribuidores</span>
+            <MdOutlineStorefront size={30} />
+
+            <span className="ml-3 text-xl">Locales</span>
           </Link>
         )}
       </nav>
