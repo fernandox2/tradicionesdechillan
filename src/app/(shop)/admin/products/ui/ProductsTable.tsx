@@ -7,7 +7,8 @@ import { IoPencil, IoCubeOutline, IoTrashOutline } from 'react-icons/io5';
 import type { Product } from '@/interfaces';
 import { deleteProduct } from '@/actions/product/delete-product';
 import { useRouter } from 'next/navigation';
-
+import { FaSpinner } from 'react-icons/fa';
+import { useState } from 'react';
 
 interface ProductsTableProps {
   products: Product[];
@@ -16,6 +17,7 @@ interface ProductsTableProps {
 export const ProductsTable = ({ products }: ProductsTableProps) => {
 
   const route = useRouter();
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const sizeLabels: Record<string, string> = {
     XS: "XS",
@@ -31,11 +33,19 @@ export const ProductsTable = ({ products }: ProductsTableProps) => {
   };
 
   const eliminarProducto = async (productId: string) => {
-     await deleteProduct(productId);
-     route.refresh();
-  }
+    setDeletingId(productId);
+    await deleteProduct(productId);
+    route.refresh();
+    setDeletingId(null);
+  };
 
   return (
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+  {deletingId && (
+    <div className="absolute inset-0 bg-white/60 flex items-center justify-center z-20">
+      <FaSpinner className="animate-spin text-gray-600 text-2xl" />
+    </div>
+  )}
     <div className="overflow-x-auto shadow-md sm:rounded-lg">
       <table className="min-w-full text-sm text-left text-slate-700">
         <thead className="text-xs text-slate-700 uppercase bg-slate-50 border-b border-slate-300">
@@ -46,16 +56,16 @@ export const ProductsTable = ({ products }: ProductsTableProps) => {
             <th scope="col" className="px-4 py-3 md:px-6">
               Título
             </th>
-            <th scope="col" className="px-4 py-3 md:px-6 hidden md:table-cell">
+            <th scope="col" className="px-4 py-3 md:px-6 md:table-cell">
               Precio
             </th>
-            <th scope="col" className="px-4 py-3 md:px-6 hidden lg:table-cell">
+            <th scope="col" className="px-4 py-3 md:px-6 lg:table-cell">
               Stock
             </th>
-            <th scope="col" className="px-4 py-3 md:px-6 hidden lg:table-cell">
+            <th scope="col" className="px-4 py-3 md:px-6 lg:table-cell">
               Tallas
             </th>
-            <th scope="col" className="px-4 py-3 md:px-6">
+            <th scope="col"className="w-24 px-4 py-3 md:px-6 bg-white sticky right-0 z-10">
               Acciones
             </th>
           </tr>
@@ -89,10 +99,10 @@ export const ProductsTable = ({ products }: ProductsTableProps) => {
                 </Link>
                 <p className="text-xs text-slate-500 uppercase">{product.id.split('-')[0]}</p>
               </td>
-              <td className="px-4 py-3 md:px-6 hidden md:table-cell">
+              <td className="px-4 py-3 md:px-6 md:table-cell">
                 ${product.price.toFixed(2)}
               </td>
-              <td className="px-4 py-3 md:px-6 hidden lg:table-cell">
+              <td className="px-4 py-3 md:px-6 lg:table-cell">
                 {product.inStock > 0 ? (
                   <span className={`px-2 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full ${
                     product.inStock < 10 ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'
@@ -105,10 +115,9 @@ export const ProductsTable = ({ products }: ProductsTableProps) => {
                   </span>
                 )}
               </td>
-             <td className="px-4 py-3 md:px-6 hidden lg:table-cell">
+             <td className="px-4 py-3 md:px-6 lg:table-cell">
               {product.sizes.map(size => sizeLabels[size] ?? size).join(', ')}
             </td>
-
 
             <td
                   className="px-4 py-4 md:px-6 w-30 bg-gray-100 sticky right-0 z-10 space-x-2 flex items-stretch"
@@ -145,6 +154,7 @@ export const ProductsTable = ({ products }: ProductsTableProps) => {
           )}
         </tbody>
       </table>
+    </div>
     </div>
   );
 };

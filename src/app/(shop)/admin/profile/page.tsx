@@ -1,26 +1,19 @@
 import { redirect } from "next/navigation";
-
 import { auth } from "@/auth.config";
 import { Title } from "@/components";
+import ProfileForm from "./ui/ProfileForm";
+
 
 export default async function ProfilePage() {
   const session = await auth();
 
   if (!session?.user) {
-    //redirect("/auth/login?returnTo=/profile");
     redirect("/");
   }
+
   return (
-    <div>
-      <Title title="Profile" />
-
-      {
-
-        <div>
-          <pre>{JSON.stringify(session?.user, null, 2)}</pre>
-        </div>
-
-      }
+    <div className="py-6">
+      <ProfileForm user={session.user} />
     </div>
   );
 }
