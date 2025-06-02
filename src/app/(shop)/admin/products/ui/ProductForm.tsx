@@ -9,7 +9,12 @@ import { ProductImage } from "@/components/product/product-image/ProductImage";
 import { createUpdateProduct } from "@/actions/product/create-update-product";
 import { Category } from "@/interfaces/category.interface";
 import { Mensaje } from "@/components/ui/toast/Toast";
-import { deleteImageFTP, deleteProductImage } from "@/actions/product/delete-product-image";
+import {
+  deleteImageFTP,
+  deleteProductImage,
+} from "@/actions/product/delete-product-image";
+import { useEffect, useState } from "react";
+import { AiOutlineLoading } from "react-icons/ai";
 
 interface Props {
   product: Partial<Product> & { ProductImage?: ProductWithImage[] };
@@ -44,6 +49,7 @@ interface FormInputs {
 
 export const ProductForm = ({ product, categories }: Props) => {
   const router = useRouter();
+  const [load, setLoad] = useState(false);
 
   const {
     handleSubmit,
@@ -70,14 +76,15 @@ export const ProductForm = ({ product, categories }: Props) => {
   };
 
   const onSubmit = async (data: FormInputs) => {
+    setLoad(true);
+  
     const formData = new FormData();
-
     const { images, ...productToSave } = data;
-
+  
     if (product.id) {
       formData.append("id", product.id ?? "");
     }
-
+  
     formData.append("title", productToSave.title);
     formData.append("slug", productToSave.slug);
     formData.append("description", productToSave.description);
@@ -86,39 +93,66 @@ export const ProductForm = ({ product, categories }: Props) => {
     formData.append("sizes", productToSave.sizes.toString());
     formData.append("tags", productToSave.tags);
     formData.append("categoryId", productToSave.categoryId);
-    // formData.append("gender", productToSave.gender);
-
+  
     if (images) {
       for (let i = 0; i < images.length; i++) {
         formData.append("images", images[i]);
       }
     }
-
-    const {
-      ok,
-      product: updatedProduct,
-      message,
-    } = await createUpdateProduct(formData);
-
-console.log(message)
-    if (!ok) {
-      Mensaje("holaaa", "error", {
+  
+    try {
+      const {
+        ok,
+        product: updatedProduct,
+        message,
+      } = await createUpdateProduct(formData);
+  
+      if (!ok) {
+        Mensaje("holaaa", "error", {
+          title: message,
+        });
+        return;
+      }
+  
+      Mensaje("", "success", {
         title: message,
       });
-      return;
+  
+      router.replace(`/admin/products`);
+    } catch (error) {
+      Mensaje("Error inesperado", "error", {
+        title: "No se pudo guardar el producto",
+      });
+    } finally {
+      setLoad(false);
     }
-
-    Mensaje("", "success", {
-      title: message,
-    });
-
-    router.replace(`/admin/products`);
+  };
+  
+  const deleteImageProducto = async (id: number, url: string) => {
+    deleteImageFTP(url, id);
   };
 
-  const deleteImageProducto = async ( id: number, url: string ) => {
-    //elimina la imagen de la tabla productImage y del ftp
-     deleteImageFTP(url, id)
-  }
+  const generateSlug = (text: string): string => {
+    return text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/ñ/g, "n")
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
+  };
+
+    useEffect(() => {
+      const subscription = watch((value, { name }) => {
+        if (name === "title") {
+          const slugGenerated = generateSlug(value.title || "");
+          setValue("slug", slugGenerated, { shouldValidate: true });
+        }
+      });
+      return () => subscription.unsubscribe();
+    }, [watch, setValue]);
 
   return (
     <form
@@ -138,6 +172,7 @@ console.log(message)
         <div className="flex flex-col mb-2">
           <span>Slug</span>
           <input
+            disabled
             type="text"
             className="p-2 border rounded-md bg-gray-200"
             {...register("slug", { required: true })}
@@ -187,12 +222,32 @@ console.log(message)
         </div>
 
         {product.id ? (
-          <button className="bg-blue-600 py-3 rounded-md text-white w-full">
-            Actualizar
+          <button
+            disabled={load}
+            className="bg-blue-600 py-3 rounded-md text-white w-full flex items-center justify-center gap-2 disabled:opacity-50"
+          >
+            {load ? (
+              <>
+                <AiOutlineLoading className="animate-spin h-5 w-5" />
+                Actualizando...
+              </>
+            ) : (
+              "Actualizar"
+            )}
           </button>
         ) : (
-          <button className="bg-green-600 py-3 rounded-md text-white w-full">
-            Guardar
+          <button
+            disabled={load}
+            className="bg-green-600 py-3 rounded-md text-white w-full flex items-center justify-center gap-2 disabled:opacity-50"
+          >
+            {load ? (
+              <>
+                <AiOutlineLoading className="animate-spin h-5 w-5" />
+                Guardando...
+              </>
+            ) : (
+              "Guardar"
+            )}
           </button>
         )}
       </div>
