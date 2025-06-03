@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 import { changePassword } from '@/actions/users/change-password';
 import { useState, useTransition } from 'react';
 
@@ -60,7 +62,9 @@ const ProfileForm = ({ user }: Props) => {
       <h2 className="text-2xl font-semibold text-gray-800">Perfil de Usuario</h2>
 
       <div className="flex items-center space-x-4">
-        <img
+        <Image
+          width={80}
+          height={80}
           src={image}
           alt="Foto de perfil"
           className="w-20 h-20 rounded-full object-cover border"

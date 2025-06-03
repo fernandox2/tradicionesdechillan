@@ -49,7 +49,7 @@ export const HomeSlider = () => {
         />
       )}
 
-      {activeSlide === 0 && (
+      {/* {activeSlide === 0 && (
         <Image
           width={299}
           height={401}
@@ -57,7 +57,7 @@ export const HomeSlider = () => {
           className="absolute z-10 top-0 left-1/2 -translate-x-1/2"
           alt="Bandera Tradiciones"
         />
-      )}
+      )} */}
 
       <Swiper
         modules={[Pagination, Autoplay, A11y]}
