@@ -49,15 +49,25 @@ export const HomeSlider = () => {
         />
       )}
 
-      {/* {activeSlide === 0 && (
-        <Image
-          width={299}
-          height={401}
-          src="/imgs/home-slider/label-3.png"
-          className="absolute z-10 top-0 left-1/2 -translate-x-1/2"
-          alt="Bandera Tradiciones"
-        />
-      )} */}
+      {activeSlide === 0 && (
+        <div>
+          <Image
+            width={59}
+            height={129}
+            src="/imgs/home-slider/label-4.png"
+            className="absolute z-10 top-0 left-1/2 -translate-x-1/2"
+            alt="Bandera Tradiciones"
+          />
+
+          <Image
+            width={696}
+            height={181}
+            src="/imgs/home-slider/texto.png"
+            className="absolute z-10 top-40 left-1/2 -translate-x-1/2"
+            alt="Bandera Tradiciones"
+          />
+        </div>
+      )}
 
       <Swiper
         modules={[Pagination, Autoplay, A11y]}
