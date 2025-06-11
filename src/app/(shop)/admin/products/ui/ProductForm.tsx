@@ -108,7 +108,7 @@ export const ProductForm = ({ product, categories }: Props) => {
       } = await createUpdateProduct(formData);
   
       if (!ok) {
-        Mensaje("holaaa", "error", {
+        Mensaje("Hubo un error al crear el producto!", "error", {
           title: message,
         });
         return;
@@ -289,7 +289,7 @@ export const ProductForm = ({ product, categories }: Props) => {
               {...register("images")}
               multiple
               className="p-2 border rounded-md bg-gray-200"
-              accept="image/png, image/jpeg, image/avif"
+              accept="image/png, image/jpeg, image/avif, image/webp"
             />
           </div>
 
