@@ -43,7 +43,7 @@ export async function getFtpClientAndConnect(): Promise<Client> {
             port,
             user,
             password,
-            secure,
+            // secure,
             secureOptions: ftpSecureOptions,
         });
         return client;
