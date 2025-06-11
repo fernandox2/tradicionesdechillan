@@ -89,8 +89,6 @@ export const createUpdateProduct = async( formData: FormData ) => {
             }
           })
         }
-
-        console.log('chao')
     
         if ( formData.getAll('images') ) {
           const images = await uploadArticleImage(formData.getAll('images') as File[]);
