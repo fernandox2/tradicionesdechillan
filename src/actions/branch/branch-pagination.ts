@@ -137,3 +137,32 @@ export const getPaginatedBranchesAdmin = async ({
     };
   }
 };
+
+export const getAllBranches = async (): Promise<PrismaBranch[]> => {
+  try {
+    const branches = await prisma.branch.findMany({
+      orderBy: { createdAt: "desc" },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
+
+    return branches.map((branch) => ({
+      ...branch,
+      user: branch.user ? {
+        id: branch.user.id,
+        name: branch.user.name,
+        email: branch.user.email,
+      } : null,
+    }));
+  } catch (error) {
+    console.error("[getAllBranches Action] Error:", error);
+    return [];
+  }
+}

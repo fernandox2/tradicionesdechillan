@@ -22,7 +22,7 @@ export const Filters = () => {
   return (
     <form
       onSubmit={handleSearch}
-      className="absolute flex gap-1 justify-end items-end top-16 w-full max-w-6xl mx-auto"
+      className="absolute flex gap-1 justify-end items-end top-16 w-full max-w-6xl mx-auto px-5"
     >
       <input
         type="text"

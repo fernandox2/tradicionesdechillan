@@ -35,7 +35,7 @@ const menuItems: MenuItem[] = [
   {
     id: 4,
     name: "Distribuidores",
-    url: "/#distribuidores",
+    url: "/distributors",
   },
   {
     id: 5,
