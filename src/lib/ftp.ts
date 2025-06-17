@@ -9,7 +9,12 @@ export async function getFtpClient() {
     host: process.env.FTP_HOST!,
     user: process.env.FTP_USER!,
     password: process.env.FTP_PASSWORD!,
-    secure: false,
+    secure: process.env.FTP_SECURE === 'true',
+    secureOptions:
+      process.env.FTP_SECURE === 'true' &&
+      process.env.FTP_REJECT_UNAUTHORIZED === 'false'
+        ? { rejectUnauthorized: false }
+        : undefined,
   });
 
   return client;
@@ -43,7 +48,7 @@ export async function getFtpClientAndConnect(): Promise<Client> {
             port,
             user,
             password,
-            // secure,
+            secure,
             secureOptions: ftpSecureOptions,
         });
         return client;

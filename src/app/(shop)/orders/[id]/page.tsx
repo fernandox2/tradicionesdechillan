@@ -28,9 +28,9 @@ export default async function OrderPage({ params }: Props) {
   const address = order?.OrderAddress;
 
   return (
-    <div className="flex justify-center items-center mb-72 px-10 sm:px-0">
+    <div className="flex justify-center items-center mb-72 px-10 sm:px-0 py-10">
       <div className="flex flex-col w-[1000px]">
-        <Title title={`Orden #${id}`} />
+        <h2 className="text-2xl font-bold mb-2">{`Orden #${id}`}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
           {/* Carrito */}
           <div className="flex flex-col mt-5">
@@ -57,7 +57,7 @@ export default async function OrderPage({ params }: Props) {
                   className="flex mb-5"
                 >
                   <Image
-                    src={`/products/${product.product.ProductImage[0].url}`}
+                    src={product.product.ProductImage[0].url}
                     width={100}
                     height={100}
                     style={{

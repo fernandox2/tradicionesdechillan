@@ -6,6 +6,7 @@ import Image from "next/image";
 
 import { useCartStore } from "@/store";
 import { currencyFormat } from "@/utils";
+import { mappingSizes } from "@/components";
 
 export const ProductsInCart = () => {
 
@@ -30,7 +31,7 @@ export const ProductsInCart = () => {
           className="flex mb-5"
         >
           <Image
-            src={`/products/${product.product.images[0]}`}
+            src={product.product.images[0]}
             width={100}
             height={100}
             style={{
@@ -42,7 +43,7 @@ export const ProductsInCart = () => {
           />
           <div>
             <span>
-              {product.size} - {product.product.title} ({product.quantity})
+              {mappingSizes[product.size] || product.size} - {product.product.title} ({product.quantity})
             </span>
 
             <p className="font-bold">

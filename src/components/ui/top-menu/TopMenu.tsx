@@ -30,7 +30,7 @@ const menuItems: MenuItem[] = [
   {
     id: 3,
     name: "Productos",
-    url: "/#productos",
+    url: "/shop",
   },
   {
     id: 4,
@@ -105,7 +105,7 @@ export const TopMenu = () => {
         {/* <Link href="/" className="mx-2">
           <IoSearchOutline className="w-8 h-8 text-white" />
         </Link> */}
-        {/* {loaded && (
+        {loaded && (
           <Link
             href={totalItemsInCart > 0 ? "/cart" : "/empty"}
             className="mx-2"
@@ -119,7 +119,7 @@ export const TopMenu = () => {
               <IoCartOutline className="w-8 h-8 text-white" />
             </div>
           </Link>
-        )} */}
+        )}
 
         <button
           className={`${sequel.className} m-2 p-2 rounded-md transition-all text-white`}

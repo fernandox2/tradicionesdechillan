@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 import { useCartStore } from "@/store";
-import { QuantitySelector } from "@/components";
+import { mappingSizes, QuantitySelector } from "@/components";
 import Link from "next/link";
 
 export const ProductsInCart = () => {
@@ -37,7 +37,7 @@ export const ProductsInCart = () => {
           className="flex mb-5"
         >
           <Image
-            src={`/products/${product.product.images[0]}`}
+            src={product.product.images[0]}
             width={100}
             height={100}
             style={{
@@ -52,7 +52,7 @@ export const ProductsInCart = () => {
               className="hover:underline cursor-pointer"
               href={`/product/${product.product.slug}`}
             >
-              {product.size} - {product.product.title}
+              {mappingSizes[product.size] || product.size} - {product.product.title}
             </Link>
             <p>{product.product.price}</p>
             <QuantitySelector

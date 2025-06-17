@@ -27,6 +27,8 @@ export async function generateMetadata(
   const slug = params.slug
  
   const product = await getProductBySlug(slug);
+
+  console.log('product', product);
  
   // optionally access and extend (rather than replace) parent metadata
   //const previousImages = (await parent).openGraph?.images || []
@@ -37,7 +39,7 @@ export async function generateMetadata(
     openGraph: {
       title: product?.title ?? 'Producto no encontrado',
       description: product?.description ?? '',
-      images: [`/products/${product?.images[1]}`],
+      images: [product?.images[0] ?? ''],
     },
   }
 }
