@@ -62,6 +62,14 @@ const createOrReplaceAddress = async (address: Address, userId: string) => {
 
 export const deleteUserAddress = async (userId: string) => {
   try {
+    const storedAddress = await prisma.userAddress.findUnique({
+      where: { userId },
+    });
+
+    if (!storedAddress) {
+      return { ok: true, message: "El usuario no tiene dirección asociada" };
+    }
+
     const deleted = await prisma.userAddress.delete({
       where: { userId },
     });
