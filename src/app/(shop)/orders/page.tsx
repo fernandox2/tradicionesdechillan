@@ -8,13 +8,29 @@ import { IoCardOutline } from "react-icons/io5";
 import { auth } from "@/auth.config";
 import { Title } from "@/components";
 import { getOrdersByUser } from "@/actions";
+import { getAllOrders } from "@/actions/order/place-order";
 
 export default async function ListOrderPage() {
   const session = await auth();
 
   if (!session) redirect("/");
 
-  const { ok, orders = [] } = await getOrdersByUser(session.user.id);
+  let ok;
+  let orders: any[] = [];
+
+  if (session.user.role === "user" || session.user.role === "distributor") {
+    const respuesta = await getOrdersByUser(session.user.id);
+
+    ok = respuesta.ok;
+    orders = respuesta.orders || [];
+  }
+
+  if (session.user.role === "admin") {
+    const respuesta = await getAllOrders();
+
+    ok = respuesta.ok;
+    orders = respuesta.orders || [];
+  }
 
   if (!ok) redirect("/");
 

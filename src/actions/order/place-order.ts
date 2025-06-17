@@ -304,3 +304,36 @@ export const updateAndPayOrder = async (orderId: string, token_ws: string) => {
     };
   }
 };
+
+export const getAllOrders = async () => {
+  try {
+    const orders = await prisma.order.findMany({
+      include: {
+        OrderItem: {
+          include: {
+            product: {
+              include: {
+                ProductImage: {
+                  select: {
+                    url: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        OrderAddress: true,
+      },
+    });
+
+    return {
+      ok: true,
+      orders: orders,
+    };
+  } catch (e: any) {
+    return {
+      ok: false,
+      message: e.message,
+    };
+  }
+}
