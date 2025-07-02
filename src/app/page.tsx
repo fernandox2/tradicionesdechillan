@@ -81,21 +81,44 @@ export default async function HomePage({ searchParams }: Props) {
   );
 
   return (
-    <div className="max-w-[1440px] mx-auto flex flex-col items-center bg-white">
-      <TopMenu />
-      <Sidebar />
-      <HomeSlider />
-      <OurMark id="nosotros" />
-      <ProductPremium />
-      <ProductFormat id="productos" />
-      <DynamicMapComponent
-        mapboxToken={mapboxToken}
-        branches={locales}
-        id="distribuidores"
-      />
-      <Contact id="contacto" />
-      <Blog id="blog" articles={articles.articles as unknown as Article[]} />
-      <Footer />
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-red-700 via-yellow-200 to-red-900">
+      <div className="bg-white bg-opacity-90 rounded-3xl shadow-2xl p-12 flex flex-col items-center border-4 border-red-700 max-w-2xl">
+        <Image
+          src="/imgs/icono-tradiciones.webp"
+          alt="Tradiciones de Chillán"
+          width={180}
+          height={180}
+          className="mb-8 rounded-full border-4 border-red-700 shadow-lg"
+        />
+        <h1 className="text-5xl md:text-6xl font-extrabold text-red-700 text-center mb-6 drop-shadow-lg">
+          APLICACIÓN SUSPENDIDA
+        </h1>
+        <p className="text-2xl md:text-3xl text-gray-800 text-center font-semibold mb-4">
+          Esta aplicación web está suspendida por no pago.
+        </p>
+        <p className="text-lg text-gray-600 text-center">
+          Por favor, regularice su situación para reactivar el servicio.
+        </p>
+      </div>
     </div>
-  );
+  )
+
+  // return (
+  //   <div className="max-w-[1440px] mx-auto flex flex-col items-center bg-white">
+  //     <TopMenu />
+  //     <Sidebar />
+  //     <HomeSlider />
+  //     <OurMark id="nosotros" />
+  //     <ProductPremium />
+  //     <ProductFormat id="productos" />
+  //     <DynamicMapComponent
+  //       mapboxToken={mapboxToken}
+  //       branches={locales}
+  //       id="distribuidores"
+  //     />
+  //     <Contact id="contacto" />
+  //     <Blog id="blog" articles={articles.articles as unknown as Article[]} />
+  //     <Footer />
+  //   </div>
+  // );
 }
